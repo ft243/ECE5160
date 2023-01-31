@@ -273,9 +273,33 @@
                                         <div class="divider-custom-line"></div>
                                     </div>
                                     <!-- Portfolio Modal - Image-->
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/cabin.png" alt="..." />
+                                    <h3>Part I - Blink It Up</h3>
+                                    <p class="mb-4">For the first part, just follow the instructions on the web page. Among them, note that the board type we use is nano type redboard, the wrong choice of board type will lead to the failure of the response function. In the following video, I compare the LED blinking with the clock, presumably the unit of the number after the delay function is microsecond, because delay(1000) has a high consistency with the clock which changes by second. I do not need to adjust the baud rate and I can see the LED blinking normally</p>
+                                    <!--<img class="img-fluid rounded mb-5" src="assets/img/portfolio/cabin.png" alt="..." />-->
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/PkY3vDoJZVQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                    <h3>Part II - Serial</h3>
+                                    <p class="mb-4">Open the serial monitor and Artemis outputs something specific first. Sending a specific string to Artemis, you can see from the serial monitor that Artemis immediately replies with the same content, as if it were "echo". This part verifies that Artemis is communicating properly with the PC in both directions.</p>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/yYxDt6RDE60" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                    <h3>Part III - analogRead</h3>
+                                    <p class="mb-4">Run the analogRead example program, and Artemis will continuously output the real-time temperature value (expressed in five digits) through the serial monitor. Blowing or touching the chip made some changes on the temperature value, but these changes were subtle.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/anaread.jpg" alt="..." />
+                                    <h3>Part IV - Microphone Output</h3>
+                                    <p class="mb-4">Running the corresponding example program, Artemis first outputs some basic information for the FFT operation, and then continuously outputs the real-time FFT result, i.e. the frequency with the highest current energy.</p>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/HFpHJkEz0KE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                    <h3>Part V (5000+ Addition) - LED on when "A3"</h3>
+                                    <p class="mb-4">I downloaded a piano simulator on my phone and chose to use a pleasing A3 note as the subject of my experiment. Running the FFT program just now, I found that the note has an characteristic frequency of 2220 Hz, i.e., 2220 Hz appears in the FFT result only when this note is played. The part of the program is relatively simple, combining the Part I and Part IV programs. Specifically, when the MicrophoneOutput program uses the Serial.printf function to output, just add a few lines of code to guide the state of the LEDs. The final result is not bad, see the video below.</p>
+                                    <code>if(ui32LoudestFrequecy == 2220)<br>
+                                        {<br>
+                                        digitalWrite(LED_BUILTIN, HIGH);<br>
+                                        }<br>
+                                        else<br>
+                                        {<br>
+                                        digitalWrite(LED_BUILTIN, LOW);<br>
+                                        }<br>
+                                    </code>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/g2w3_cSEp64" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                                     <!-- Portfolio Modal - Text-->
-                                    <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
+                                    <!--<p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>-->
                                     <button class="btn btn-primary" data-bs-dismiss="modal">
                                         <i class="fas fa-xmark fa-fw"></i>
                                         Close Window
