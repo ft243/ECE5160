@@ -398,7 +398,7 @@
                             <div class="row justify-content-center">
                                 <div class="col-lg-8">
                                     <!-- Portfolio Modal - Title-->
-                                    <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Circus Tent</h2>
+                                    <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Time of Flight Sensors</h2>
                                     <!-- Icon Divider-->
                                     <div class="divider-custom">
                                         <div class="divider-custom-line"></div>
@@ -408,7 +408,38 @@
                                     <!-- Portfolio Modal - Image-->
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/circus.png" alt="..." />
                                     <!-- Portfolio Modal - Text-->
-                                    <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
+                                    <h3><br>Introduction</h3>
+                                    <p class="mb-4">In this lab, the TOF sensors are set up and used. There are several specific problems that need to be solved during the application.</p>
+                                    <h3><br>Setup</h3>
+                                    <p class="mb-4">I put 3 devices on the I2C wire, two TOF sensors, and one IMU. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/3-2-1.jpg" alt="..." />
+                                    <p class="mb-4">Run the I2C example code. I got the result below. Only two devices are identified (0x29 and 0x69). That makes sense because two TOF sensors share the same I2C address.  </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/3-2-2.png" alt="..." />
+                                    <p class="mb-4">To simultaneously make use of two TOF sensors, shut down any one of them and change its I2C address. The XSHUT pin will be used to realize the method. Do not forget to turn it on after setting the new address. The sketch is as below.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/3-2-3.jpg" alt="..." />
+                                    <p class="mb-4">For the placements of these two sensors, I think putting them on the left-front and right-front is a good idea, especially for the purpose of forward obstacle avoidance.</p>
+                                    <h3><br>TOF Mode and Data</h3>
+                                    <p class="mb-4">There are only two modes in fact, short for 1.3m and long for 4m. Taking the size of the robot(car) into consideration, 1.3m is enough for the guidance of its movement. If we want to position the car using the distance from the boundary, the long mode may be more appropriate. Therefore, I use the short mode for the following tasks.</p>
+                                    <p class="mb-4">I measure the distance of 100mm, 200mm, 300mm, …, and 1300mm using one TOF sensor under two light conditions, got the result, and plot them using excel. Generally, it is accurate, maybe a calibration can be applied to deal with the unidirectional errors. The result in dark circumstances is more closed, probably caused by less light disturbance.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/3-3-1.png" alt="..." />
+                                    <h3><br>Two TOFs Together</h3>
+                                    <p class="mb-4">To use two TOF sensors simultaneously, I code as below when setup these sensors and take the outcome as a video.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/3-4-1.png" alt="..." />
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/v8blSKpUIeU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>                                
+                                    <h3><br>Distance with clock</h3>
+                                    <p class="mb-4">Slightly modify the loop of the example as below.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/3-5-1.png" alt="..." />
+                                    <p class="mb-4">In the result, the clock values were output with intervals of 4ms, the results were output with intervals of roughly 100ms. That means I can get the double distance information 10 times per second. The velocity of ADC may be the key factor that limits the speed.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/3-5-2.png" alt="..." />
+                                    <h3><br>BLE</h3>
+                                    <p class="mb-4">Use the framework in lab2, and create a new command called TOF in Jupyter Lab. On the Artemis side, fit the setup part and get-value part in.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/3-6-1.png" alt="..." />
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/3-6-2.png" alt="..." />
+                                    <h3><br>(5000+) Discussion of infrared sensor</h3>
+                                    <p class="mb-4">Infrared light is invisible light and there are a lot of infrared rays present in the daily environment. All these infrared rays will inevitably affect the infrared sensor. Therefore, when designing, choose a specific wavelength of infrared light as the medium to resist interference as much as possible; when using, do not use it in places where the light source is too strong. In the first part, the TOF sensor can show better performance under dark light conditions.</p>
+                                    <p class="mb-4">I tried several colors of reflective surfaces on hand, which had little effect on the results. In theory, darker objects would absorb more light to cause less return energy, but in practice I did not notice this effect. For glass-like surfaces, I found that the sensor even went through the glass to measure the distance to the object behind the glass, which is unacceptable. Presumably, ultrasonic distance sensors can avoid this problem to some extent, due to the different properties of electromagnetic and mechanical waves.</p>
+
+
                                     <button class="btn btn-primary" data-bs-dismiss="modal">
                                         <i class="fas fa-xmark fa-fw"></i>
                                         Close Window
