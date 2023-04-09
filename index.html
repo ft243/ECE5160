@@ -596,10 +596,30 @@
                                         <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                                         <div class="divider-custom-line"></div>
                                     </div>
-                                    <!-- Portfolio Modal - Image-->
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/submarine.png" alt="..." />
-                                    <!-- Portfolio Modal - Text-->
-                                    <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
+
+                                    <h3><br>Introduction</h3>
+                                    <p class="mb-4">In this lab, PID closed-loop control is applied in the robot system to control the distance to the wall. (I chose task A_position control)</p>
+                                    <h3><br>Pre-lab</h3>
+                                    <p class="mb-4">Although we can observe the behaviors of our car, knowing the key values from the sensor and Artemis is very important for our PID tuning. Therefore, I build a new string processing function in Python, together with storing the data and plotting functions as below. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/6-1.png" alt="..." />
+                                    <p class="mb-4">On Artemis, the data is sent in the package of time, distance, and PWM. I get rid of the symbols and only split them with “|” to reduce the time for data sending so that the control period can be small. (We only have one core for both PID control and data sending). The code will be shown in the following part with PID control.</p>
+                                    <h3><br>PID-control</h3>
+                                    <p class="mb-4">From my point of view, proportional control is the basic part of PID, the integral part is used to eliminate the static error, and finally add the derivative parameter to make the system respond in advance if needed. Tuning the PID parameters should make the system stable first, then accurate, and finally fast. </p>
+                                    <p class="mb-4">I realized the PID control by the following code. It is worth noting that the car has a threshold PWM value to overcome the friction (42 left, 35 right for my car). Therefore, PWM below this value is meaningless in physics, I add these threshold values when setting the GPIO. I also set 30 as the limitation of PWM (left) to make the car easier to control.</p>
+                                    <p class="mb-4">The code is as below, together with BLE data-sending functions. I finally tuned my proportional parameter to 0.7 and my integral parameter to 0.1.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/6-2.png" alt="..." />
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/6-3.png" alt="..." />
+                                    <h3><br>Results</h3>
+                                    <p class="mb-4">In the short-distance starting test, the car responded as below and I plot the data as required. I think the car did a good job.</p>
+                                    <iframe width="390" height="693" src="https://www.youtube.com/embed/j1QqhKeiPpM" title="Lab6_1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/6-4.png" alt="..." />
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/6-5.png" alt="..." />
+                                    <p class="mb-4">In the long-distance starting test, the overshooting became big due to the longer acceleration. The car almost hit the wall but the car decelerated to zero and backed up at the last moment.</p>
+                                    <iframe width="390" height="693" src="https://www.youtube.com/embed/E283Ss8As5Y" title="Lab6_2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/6-6.png" alt="..." />
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/6-7.png" alt="..." />
+                                    <h3><br>Wind-up protection for integrator (5000+ level)</h3>
+                                    <p class="mb-4">The integral part can eliminate the static error but also causes the lagging, i.e. the former error will influence the latter action by the integrator. This lagging can be reduced by the limitation of the integrator and we can also make some leading part (derivative part) to offset to some extent. In my lab, I set the limitation of PWM output to limit the influence of the integrator.</p>
                                     <button class="btn btn-primary" data-bs-dismiss="modal">
                                         <i class="fas fa-xmark fa-fw"></i>
                                         Close Window
