@@ -801,10 +801,10 @@
                                     <h3><br>Algorithms</h3>
                                     <p class="mb-4">Beginning with the framework, we need to realize the idea of the Bayes filter. As in the tutorial, numpy and math modules are used in the code. The whole thing can be divided into 5 parts.</p>
                                     <h4><br>Part I compute_control</h4>
-                                    <p class="mb-4">The status of the robot contains its position and direction. The robot can switch from one status to another status by 3 steps. Firstly, rotate toward the new position, then move the proper distance and adjust to the new orientation. This part is actually figuring out these three parameters given the old and new statuses.</p>
+                                    <p class="mb-4">The status of the robot contains its position and direction. The robot can switch from one status to another status by 3 steps. Firstly, rotate toward the new position, then move the proper distance and adjust to the new orientation. This part is actually figuring out these three parameters given the old and new status.</p>
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab10_1.png" alt="..." />
                                     <h4><br>Part II odom_motion_model</h4>
-                                    <p class="mb-4">This part uses an odometry model to return the probability that the robot moves to a certain status, given two statuses and the control.</p>
+                                    <p class="mb-4">This part uses an odometry model to return the probability that the robot moves to a certain status, given two status and the control.</p>
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab10_2.png" alt="..." />
                                     <h4><br>Part III prediction_step</h4>
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab10_3.png" alt="..." />
