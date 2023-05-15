@@ -766,7 +766,31 @@
                                     </div>
 
                                     <h3><br>Introduction</h3>
-                                    <p class="mb-4">1</p>
+                                    <p class="mb-4">In this lab, a 2D map is built by the robot. The robot rotated and scanned from 4 points, and get several distances. Then I merged these data together and compare them with the real map.</p>
+                                    <h3><br>Rotation Control</h3>
+                                    <p class="mb-4">The robot is required to rotate one circle and get 20 distances with same angle intervals. For the rotation, an open-loop strategy is applied.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/9_1.png" alt="..." />
+                                    <p class="mb-4">I drive each move by applying a PWM of 200/255 on the right (backward), and a PWM of 170/255 on the left (forward) because of the asymmetry within the system. These PWMs are kept for 100ms, then brakes are applied for 100ms to make sure the robot is still when measuring the distance. Under these values, each move is 18 degrees, and 20 moves to 360 degrees as shown in the video below.</p>
+                                    <iframe width="390" height="693" src="https://www.youtube.com/embed/3d6wgqOwkAM" title="Lab9" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                    <p class="mb-4">I have to admit that open-loop control may not be the best choice because the robot acted precisely only when the battery voltage is 3.65-3.7V. When the battery voltage is high, the robot will rotate more than one turn and vice versa. In addition to performing closed-loop control, I think there are two other ways to improve the stability of the robot with respect to the battery voltage -- using a lower PWM but a longer delay time to accomplish the same move or applying a voltage stabilizer chip to the battery.</p>
+                                    <h3><br>Data processing</h3>
+                                    <p class="mb-4">Even though the robot had some problems as above, I monitored the battery voltage to make sure my robot performed well at the four measurements.</p>
+                                    <p class="mb-4">Data from (5 inches, -3 inches) is logged and drawn in the polar coordinate system as below.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/9_2.png" alt="..." />
+                                    <p class="mb-4">Data from (-3 inches, -2 inches) is logged and drawn in the polar coordinate system as below.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/9_3.png" alt="..." />
+                                    <p class="mb-4">Data from (0 inch, 3 inches) is logged and drawn in the polar coordinate system as below.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/9_4.png" alt="..." />
+                                    <p class="mb-4">Data from (5 inches, 3 inches) is logged and drawn in the polar coordinate system as below.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/9_5.png" alt="..." />
+                                    <p class="mb-4">Then I merge these points in the cartesian coordinate system. I am more familiar with metric units so I convert inches to millimeters and build the map with the unit of millimeters.</p>
+                                    <p class="mb-4">The photo of the lab field looks like this.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/9_6.jpg" alt="..." />
+                                    <p class="mb-4">I draw the boundaries in the real world together with the map I get by merging the data.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/9_7.png" alt="..." />
+                                    <p class="mb-4">I code in Jupyter Notebook to do the data processing. Each of my scan begins towards the windows and the robot makes the first rotation and measure the first distance, so an offset of angle is applied.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/9_8.png" alt="..." />
+                                    <p class="mb-4">The past website from Ryan helps me a lot. Thanks!</p>
                                     <button class="btn btn-primary" data-bs-dismiss="modal">
                                         <i class="fas fa-xmark fa-fw"></i>
                                         Close Window
