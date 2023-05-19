@@ -880,11 +880,29 @@
                                     <p class="mb-4">In this experiment, we will implement localization on the robot, exactly by running Bayesian filters on the computer to determine the robot's position based on the data returned by the robot.</p>
                                     <h3><br>Simulation</h3>
                                     <p class="mb-4">Run this simulation ro make sure we set up correctly as in Lab10.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/11-1-1.png" alt="..." />
+                                    <h3><br>Arduino Side</h3>
+                                    <p class="mb-4">I think my open-loop control in lab 9 is OK. Therefore, I just simply modified the code to meet the requirement of this lab (18 measures for each circle).</p>
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/11-1.png" alt="..." />
-                                    <h3><br>Introduction</h3>
-                                    <p class="mb-4">1</p>
-                                    <h3><br>Introduction</h3>
-                                    <p class="mb-4">1</p>
+                                    <h3><br>PC Side</h3>
+                                    <p class="mb-4">Based on the framework given, we need to code under perform_observation_loop to plug the measurements in the localization algorithm. I use the same idea of my previous BLE communication based on the string processor.</p>
+                                    <p class="mb-4">However, although the distance array can have 18 values at last, the function did not wait for all of the 18 data. Some delay should be applied here. I try to use while~if~break, timer, and even flag variables but they did not work because they all blocked the running of my string processor. With the help from Anya, I finally figure out the solution using “asyncio.run(asyncio.sleep(8))” and all things work after that.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/11-2.png" alt="..." />
+                                    <h3><br>Tests and Results</h3>
+                                    <p class="mb-4">My first test is from (5,-3)</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/11-3.png" alt="..." />
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/11-4.png" alt="..." />
+                                    <p class="mb-4">Then from (-3,-2)</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/11-5.png" alt="..." />
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/11-6.png" alt="..." />
+                                    <p class="mb-4">From (0,3)</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/11-7.png" alt="..." />
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/11-8.png" alt="..." />
+                                    <p class="mb-4">From (5,3)</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/11-9.png" alt="..." />
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/11-10.png" alt="..." />
+                                    <h3><br>Discussion</h3>
+                                    <p class="mb-4">My algorithm performs well at the last three points and has a relatively large error at the first point. From the graph, the measured value at point (5, -3) should include many larger numbers, and the lack of accuracy of the sensor at long distances may be the cause of the problem. Also, as described in lab 9, my open-loop control is highly dependent on the battery voltage, and although I have tried my best to adjust it, it is difficult to ensure that the car has turned exactly one full revolution in each test. I think my experiment worked well overall, but there is room for improvement.</p>
                                     <button class="btn btn-primary" data-bs-dismiss="modal">
                                         <i class="fas fa-xmark fa-fw"></i>
                                         Close Window
