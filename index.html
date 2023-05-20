@@ -933,7 +933,29 @@
                                     </div>
 
                                     <h3><br>Introduction</h3>
-                                    <p class="mb-4"></p>
+                                    <p class="mb-4">This is a relatively free lab. The object is to make the robot pass through 9 designated points in order. The methods of implementation can be very diverse.</p>
+                                    <h3><br>Idea Building</h3>
+                                    <p class="mb-4">When I begin my work, some classmates are already testing their robots. Therefore, my ideas have been greatly expanded by the communications. Thank you all!</p>
+                                    <p class="mb-4">Among the ideas, I am not a big fan of the methods needing to continue sending commands to the robot during the process. In my opinion, the robots should totally act by themselves, because if we can continue to control the robot, the most effective way should be directly commanding the robot to move backward/forward or left/right, rather than using a series of algorithms.</p>
+                                    <p class="mb-4">Observing the path given and the field in the lab. I think it is difficult to implement PID control for point 1 ~ point 6, because of the lack of reference in short distances. ( I think our sensor may not work well facing the long distance). For point 6 ~ point 9, this is simply a scenario designed for PID control! PID to point 7 then turn left 90 degrees, PID to point 8 then turn left 90 degrees, and PID to the origin (point 9).</p>
+                                    <p class="mb-4">Therefore, my initial idea is to use open loop control to pass through point 1 ~ point 6 and end with the correct position and orientation. Three PID controls and two open-loop turns are implemented then.</p>
+                                    <p class="mb-4">However, when I succeed to tune the first stage of open-loop control finally. I found my position and orientation at point 6 to be very accurate, the whole thing is almost there, I can use open-loop control from beginning to end because the parts that are supposed to be PID are easier for open-loop control than previous parts. </p>
+                                    <h3><br>Implement</h3>
+                                    <p class="mb-4">Although I was mentally prepared, the process of debugging open-loop control was still more complicated than I imagined, mainly because the effect of control and battery voltage are highly correlated. Debugging out the parameters alone is meaningless; it makes sense to combine the voltages. I maintain my battery voltage between 4V-4.1V and the deviation caused by this range is within acceptable limits. I measure the battery voltage before each test to ensure it is within range.</p>
+                                    <p class="mb-4">I use modules of forward, backward, left and right. I design the parameters to make “forwards“results in moving forward for half tile, “left” and “right” results in turn ~60 degrees, “back” for moving back a little.</p>
+                                    <p class="mb-4">The advantage is obvious, we can use modules in Python and do not need to plug in the USB cable every time. However, accuracy is definitely not as high as direct parameter adjustment. In other words, I chose the appropriate granularity of operation.</p>
+                                    <p class="mb-4">Another advantage is that modules can make my tuning linear. I notice that delay (200) usually will not result in two times of movement than delay (100) because There is a process of acceleration and deceleration. I make each module ends with a brake for 100ms to decouple the two actions before and after.</p>
+                                    <p class="mb-4">The modules are written as below.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/12-1.png" alt="..." />
+                                    <p class="mb-4">This is how I call them. Using loops is a good idea for readability, but I present here the code that was running at the time.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/12-2.png" alt="..." />
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/12-3.png" alt="..." />
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/12-4.png" alt="..." />
+                                    <h3><br>Results</h3>
+                                    <p class="mb-4">There were a lot of people at the site while I was debugging. Since I was doing full open loop control, I marked the new site with tape in the hallway to save everyone's time and my own time.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/12-5.jpg" alt="..." />
+                                    <p class="mb-4">Let's see the results! I am very happy with it.</p>
+                                    <iframe width="334" height="594" src="https://www.youtube.com/embed/rIwotIOYLPU" title="Lab_12" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                                     <button class="btn btn-primary" data-bs-dismiss="modal">
                                         <i class="fas fa-xmark fa-fw"></i>
                                         Close Window
