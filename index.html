@@ -381,29 +381,38 @@
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-2-3.png" alt="..." />
                                     <p class="mb-4">At last, call this command and we should get the time with “T:” prefix.</p>
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-2-4.png" alt="..." />
-                                    <h3><br>Task 3 Handler</h3>
-                                    <p class="mb-4">Design a “strprocessor” to deal with the string from Artemis, split it with “:” and the second part is the value of time without prefix. Use ble.start_notify function to call it, which makes sure it will work when a new string comes in. </p>
+                                    <h3><br>Part 2 Task 3: Notification Handler</h3>
+                                    <p class="mb-4">With the help of callback function, a notification handler can be set up to receive the string value. I named my callback function stringhandler. In my callback function, the string is split with a colon, and use a global variable “time_value” to store the time. Use ble.start_notify() function to start the notification handler. We can see below, “time_value” is only the time while “s” contains “T:” and time. This means that the notification handler is working well.</p>
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-3-1.png" alt="..." />
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-3-2.png" alt="..." />
-                                    <h3><br>Task 4 Get Temperature</h3>
-                                    <p class="mb-4">Design a new strprocessor to deal with a group of five temperatures with time to make the raw string more readable.</p>
+                                    <h3><br>Part 2 Task 4: A Loop to send current time</h3>
+                                    <p class="mb-4">We can find a loop() function in ble_arduino.ino file, and in loop() function we can find a write_data() function to send data. Therefore, I planned to change the write_data() function to make nano board send time data continuously in the loop. </p>
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-4-1.png" alt="..." />
+                                    <p class="mb-4">Collect 5 seconds time data, and put all the time data into “data_collector”. Use the notification handler again to extract the wanted time data.</p>
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-4-2.png" alt="..." />
+                                    <p class="mb-4">The length of the “data_collector” is the number of time data we have received. We can use the last element of “data_collector” minus the first element of “data_collector”, which is the time duration used for transmitting data. Use the number of time data divide the time duration (remember to change microsecond to second), and this is the data rate.</p>
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-4-3.png" alt="..." />
-                                    <h3><br>TASK 5 Get Temperature Rapidly</h3>
-                                    <p class="mb-4">For the purpose of getting 60 temperatures in 5 seconds, we do not have to make them by groups. We can just convey the information one by one, and delay for 80ms between every communication.</p>
+                                    <h3><br>Part 2 Task 5: SEND_TIME_DATA Command</h3>
+                                    <p class="mb-4">Create an array to store the time stamps. Make it global in case other functions will access it. </p>
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-5-1.png" alt="..." />
+                                    <p class="mb-4">Similar to Task 4, the code needs to be in a loop. Write the code in the write_data() again and comment the code used for Task 4. The if logic prevents from over-filling the array. At last, timeStamps[] array should contain 100 time data. </p>
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-5-2.png" alt="..." />
+                                    <p class="mb-4">Similar to Task 2, create a SEND_TIME_DATA command (remember to add it in cmd_types.py file). After all the time data is sent, I designed to send one more “END” data to show all data has been transmitted. </p>
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-5-3.png" alt="..." />
-                                    <p class="mb-4">From 1405545 to 1410442, 60 temperatures with time are transferred and processed successfully.</p>
-                                    <h3><br>TASK 6 Limitation</h3>
-                                    <p class="mb-4">Suppose X% RAM is for the use of sending, total bit for sending = 384*1000*8*X% = 3072000*X%. Total bit in one module of the specific form = 5*16*150 = 12000. So, the maximum number of this type of module is 256*X%. </p>
-                                    <h3><br>TASK 7 (5000+) Data Ratep</h3>
-                                    <p class="mb-4">I use the simplified ECHO command to measure the time interval between sending and receiving with 1B, 2B, 3B, …, 120B messages. Calculate the data rate by byte/(2*time).</p>
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-7-1.png" alt="..." />
-                                    <p class="mb-4">Plot in Excel. I found that the longer packet can make a bigger Byte rate. However, there are a few downward fluctuations in the speed of large packets, which may be caused by transmission errors, checksum retransmissions.</p>
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-7-2.png" alt="..." />
-                                    <h3><br>TASK 8 (5000+) Reliability</h3>
+                                    <p class="mb-4">I designed a new callback function stringhandler2, which can detect the “END” message. However, it seems that it is not very useful. I think t I think this design might be useful in the future, so I keep it here.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-5-4.png" alt="..." />
+                                    <h3><br>Part 2 Task 6: GET_TEMP_READINGS Command</h3>
+                                    <p class="mb-4">Again, write the code in the write_data(), which is in a loop. Each element in time stamps array and temperature array should correspond, so every time put in a new element, the element number should be the same (timeStampIndex in the code shown below). </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-6-1.png" alt="..." />
+                                    <p class="mb-4">Add a new command GET_TEMP_READINGS. Each time the nano board send back a time data and a temperature data split with a comma. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-6-2.png" alt="..." />
+                                    <p class="mb-4">A new callback function stringhanlder3 was designed. Split the message with comma and put the first one into time list and the second one into temperature list. At last, 100 corresponding time data and temperature data is sent and stored in each list. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-6-3.png" alt="..." />
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-6-4.png" alt="..." />
+                                    <h3><br>Part 2 Task 7: Pros and cons of two methods</h3>
+                                    <p class="mb-4">One method is an instant send method and one is a batch store and send method. The instant send method sends the data as soon as it is generated (Task 4), the advantage is that the data can be monitored in real time, the disadvantage is that if the connection is unstable, it will lead to data loss. The disadvantage is that the data can be lost if the connection is unstable. The batch store and send method is that the data is stored locally first and then sent later. The advantage is that the data will not be lost, the disadvantage is that there may be a delay.</p>
+                                    <p class="mb-4">384kB = 384 * 1000 Byte = 384000 Bytes = 384000 * 8 bit = 3072000 bits</p>
+                                    <p class="mb-4">If the timestamp is a 4-byte integer and the temperature reading is a 4-byte floating point number, then the size of each data point is 8 bytes. 384000 Bytes / 8 = 48000 data point. However, this is not possible because not all the RAM will be used for sending data.</p>
+                                    <h3><br>Part 2 Task 8 (5000+): Data rate and overhead</h3>
                                     <p class="mb-4">I cancel the delay in temperature read rapidly command and use it to send 5000 groups of data. After checking, the data are all right. BLE communication is reliable, there should be some verification mechanism in BLE communication.</p>
                                     <!-- Portfolio Modal - Text-->
                                     <!--<p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>-->
