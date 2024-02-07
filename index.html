@@ -413,7 +413,14 @@
                                     <p class="mb-4">384kB = 384 * 1000 Byte = 384000 Bytes = 384000 * 8 bit = 3072000 bits</p>
                                     <p class="mb-4">If the timestamp is a 4-byte integer and the temperature reading is a 4-byte floating point number, then the size of each data point is 8 bytes. 384000 Bytes / 8 = 48000 data point. However, this is not possible because not all the RAM will be used for sending data.</p>
                                     <h3><br>Part 2 Task 8 (5000+): Data rate and overhead</h3>
-                                    <p class="mb-4">I cancel the delay in temperature read rapidly command and use it to send 5000 groups of data. After checking, the data are all right. BLE communication is reliable, there should be some verification mechanism in BLE communication.</p>
+                                    <p class="mb-4">I modified ECHO command to let the board send back the exact message that the computer sends to the board. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-8-1.png" alt="..." />
+                                    <p class="mb-4">I tested the data rate when the message byte was increased from 5-byte to 120-byte, so I called ECHO_BYTE command 115 times. Each time I calculated the data byte and appended it to the data_rates list. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-8-2.png" alt="..." />
+                                    <p class="mb-4">Plot the figure. The data rate increases as the packet size increases, indicating that sending larger packets is more efficient in terms of data transfer per unit of time. Overhead is introduced by short packets while larger packets help to reduce overhead because larger packets usually mean a smaller percentage of overhead (e.g., packet header information, acknowledgment information, etc.) per packet. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-8-3.png" alt="..." />
+                                    <h3><br>Part 2 Task 9 (5000+): Reliability</h3>
+                                    <p class="mb-4">Higher rate did not lead to any missing data, which means that BLE transmission is quite reliable. However, some packages may be lost due to extremely high rate. </p>
                                     <!-- Portfolio Modal - Text-->
                                     <!--<p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>-->
                                     <button class="btn btn-primary" data-bs-dismiss="modal">
