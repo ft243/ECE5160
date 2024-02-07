@@ -334,21 +334,21 @@
                                     <h3><br>Part 1 Prelab</h3>
                                     <p class="mb-4">According to the Setup instructions, install the latest Arduino IDE and Sparkfun Appollo 3 support software on the laptop. After installing everything correctly, there are some start-up examples in the Arduino IDE, and we start our journey to Arduino. </p>
                                     <h3><br>Part 1 Task 1: Blink It Up</h3>
-                                    <p class="mb-4">Test 1</p>
+                                    <p class="mb-4">Load the blink example file just following the steps in the online instruction webpage. Different from the tutorial, the real board we were using is RedBoard Artemis Nano instead of BlackBoard Artemis. Also, choose the corresponding port otherwise the Arduino IDE will not find the device to upload the code. As shown in the video, the delay time is set to 1000ms, that is, the LED should blink every 1 second.</p>
                                     <!--<img class="img-fluid rounded mb-5" src="assets/img/portfolio/cabin.png" alt="..." />-->
                                     <iframe width="560" height="315" src="https://www.youtube.com/embed/ySDt4eTGxa8?si=aVj7bQcz1rnm6Z42" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                                    <h3><br>Part II - Serial</h3>
-                                    <p class="mb-4">Open the serial monitor and Artemis outputs something specific first. Sending a specific string to Artemis, you can see from the serial monitor that Artemis immediately replies with the same content, as if it were "echo". This part verifies that Artemis is communicating properly with the PC in both directions.</p>
-                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/yYxDt6RDE60" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                                    <h3><br>Part III - analogRead</h3>
-                                    <p class="mb-4">Run the analogRead example program, and Artemis will continuously output the real-time temperature value (expressed in five digits) through the serial monitor. Blowing or touching the chip made some changes on the temperature value, but these changes were subtle.</p>
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/anaread.jpg" alt="..." />
-                                    <h3>Part IV - Microphone Output</h3>
-                                    <p class="mb-4">Running the corresponding example program, Artemis first outputs some basic information for the FFT operation, and then continuously outputs the real-time FFT result, i.e. the frequency with the highest current energy.</p>
-                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/HFpHJkEz0KE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                                    <h3><br>Part V (5000+ Addition) - LED on when "A3"</h3>
-                                    <p class="mb-4">I downloaded a piano simulator on my phone and chose to use a pleasing A3 note as the subject of my experiment. Running the FFT program just now, I found that the note has an characteristic frequency of 2220 Hz, i.e., 2220 Hz appears in the FFT result only when this note is played. The part of the program is relatively simple, combining the Part I and Part IV programs. Specifically, when the MicrophoneOutput program uses the Serial.printf function to output, just add a few lines of code to guide the state of the LEDs. The final result is not bad, see the video below.</p>
-                                    <code>if(ui32LoudestFrequecy == 2220)<br>
+                                    <h3><br>Part 1 Task 2: Serial</h3>
+                                    <p class="mb-4">To use the serial monitor, the baud rate should set the same as the baud rate definition in the code. If not, the serial monitor may display wrong information. In this task, the baud rate is set 115200. In the code, we print some lines first, and in the loop, the serial monitor will output what we type in. The board is continuously reading and then outputting on the serial monitor.</p>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/doneKxdnQn0?si=rjGNl-ikBFn1PnPU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                    <h3><br>Part 1 Task 3: AnalogRead</h3>
+                                    <p class="mb-4">The board continuously reads the analog signal and outputs to the serial monitor. From serial monitor we can see the real-time temperature. We can notice the small increase of the temperature by touching the board chip.</p>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/_DwznqC8Y1o?si=etCbM56Z-m3VyYM5" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                    <h3><br>Part 1 Task 4: MicrophoneOutput</h3>
+                                    <p class="mb-4"></p>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/5emFHiSYGFk?si=pu4ZZRCavyeWeIk1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                    <h3><br>Part 1 Task 5 (5000+): LED on when musical A4 note</h3>
+                                    <p class="mb-4">I planned to let the chip detect musical A4 note. Referring to the Microphone Output example code, I knew the frequency of musical A4 note is 446Hz. Therefore, a basic logic code can be written as if the loudest frequency is 446Hz, turn on the LED, otherwise turn off the LED. Coding is quite simple, we can just combine the Task 1 and Task 4 code. Code looks like this:</p>
+                                    <code>if(ui32LoudestFrequecy == 446)<br>
                                         {<br>
                                         digitalWrite(LED_BUILTIN, HIGH);<br>
                                         }<br>
@@ -357,7 +357,7 @@
                                         digitalWrite(LED_BUILTIN, LOW);<br>
                                         }<br>
                                     </code>
-                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/g2w3_cSEp64" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/BrHOrH1RpDI?si=xbnWWRIErMnmGhzI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                                     <!-- Portfolio Modal - Text-->
                                     <!--<p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>-->
                                     <button class="btn btn-primary" data-bs-dismiss="modal">
