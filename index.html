@@ -361,25 +361,26 @@
                                     <!-- Portfolio Modal - Text-->
                                     <h3><br>Part 2 Prelab</h3>
                                     <p class="mb-4">Follow the prelab steps, which are detailed, to set up the environment for python and BLE. BLE (Bluetooth Low Energy) is used for communication between Arduino board and Laptop. Jupyter lab will be used to run the python code. I installed python myself but strangely I did not install python3. In this case, any “python3” command must be replaced by “python” command. Initially I did not realize this problem, so I spent lots of time creating the virtual environment. Another problem here was that the virtual environment cannot be activated. Use the command “Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted” first and then the virtual environment can be activated successfully. Load the python files through the jupyter lab and set up the necessary libraries for Arduino, we can then start our first step: find the MAC address. </p>
-                                    <p class="mb-4">After running the ble_arduino.ino, the MAC address for my board is c0:89:d:6c:2d:4b.</p>
+                                    <p class="mb-4">After running the ble_arduino.ino, the MAC address for my board is c0:89:d:6c:2d:4b. Remember that the MAC address should be 12-digit long, so I left padded one 0 to make MAC address c0:89:0d:6c:2d:4b.</p>
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-0-1.png" alt="..." />
-                                    <p class="mb-4">Copy this address in connection.yaml and use uuid4 function to generate the new UUID as below. Use the new UUID to replace the demo UUID in several places. Then the setup of this lab is finished.</p>
+                                    <p class="mb-4">Use uuid4() to create my own unique UUID for connecting my laptop and my nano board. Replace the BLEService UUID in ble_arduino.ino file and replace the ble_service in connections.yaml file with this generated UUID. Also, in connections.yaml file, update the MAC address with our address. One important thing here, after changing the parameters in ble_arduino.ino, we should update again otherwise we cannot connect to the device.</p>
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-0-2.png" alt="..." />
-                                    <h3><br>Demo</h3>
-                                    <p class="mb-4">The main part of the codebase is demo.ipynb which can run in Jupyter Lab with the help of other commands from library ble.py. The successful run of this demo code means the correct setup of hardware and environment. After running the demo, the content shown in Jypyter corresponds with the content in the serial monitor as below. The MAC address of my laptop is shown through the serial monitor (F4:5C:89:C1:4F:A8).</p>
+                                    <h3><br>demo.ipynb</h3>
+                                    <p class="mb-4">A good start is to try the function in demo.ipynb file to test if all the libraries are working fine. After changing the configuration of connections.ymal file and ble_arduino.ino file, it is expected to connect successfully. In demo.ipynb, we tested the receive_float, receive_string function and PING command. Everything looks good and we can start to do the task. All the task codes will be written in demo.ipynb file.</p>
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-0-3.png" alt="..." />
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-0-4.png" alt="..." />
-                                    <h3><br>Task1 Echo</h3>
-                                    <p class="mb-4">On Artemis side, code as below to read the string from the laptop and send it back with prefixes and suffixes. Also, output the content in serial monitor with prefix.</p>
+                                    <h3><br>Part 2 Task 1: ECHO Command</h3>
+                                    <p class="mb-4">The task is that the computer will send a string to the nano board, and we need to get the nano board to read this string and add a specific prefix “Robot says ->” and suffix ":)". The code is very easy to implement, we need to extract the string, then prefix append the string and then append the suffix.</p>
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-1-1.png" alt="..." />
-                                    <p class="mb-4">On the Laptop side, call the ECHO command with a specific string. The results of this task are as below.</p>
+                                    <p class="mb-4">Then, in the python file, call the ECHO command and use the receive_string function we have tested in demo to receive the generated string (with prefix and suffix).</p>
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-1-2.png" alt="..." />
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-1-3.png" alt="..." />
-                                    <h3><br>Task2 Get Time</h3>
-                                    <p class="mb-4">Use the millis function to get the time of Artemis (in ms), convert it into a string and send it to the laptop.</p>
+                                    <h3><br>Part 2 Task 2: GET_TIME_MILLIS Command</h3>
+                                    <p class="mb-4">This task requires a GET_TIME_MILLIS Command to get the time. We can use millis() function and convert it to a string. Add the prefix “T:” and send it back to the laptop. The curly bracket was added here because without it nano board cannot be updated with the code.</p>
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-2-1.png" alt="..." />
+                                    <p class="mb-4">Before calling GET_TIME_MILLIS command, we should add GET_TIME_MILLIS to cmd_types.py and ble_arduino.ino. If not, we cannot call this command and cause an error.</p>
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-2-2.png" alt="..." />
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-2-3.png" alt="..." />
+                                    <p class="mb-4">At last, call this command and we should get the time with “T:” prefix.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-2-4.png" alt="..." />
                                     <h3><br>Task 3 Handler</h3>
                                     <p class="mb-4">Design a “strprocessor” to deal with the string from Artemis, split it with “:” and the second part is the value of time without prefix. Use ble.start_notify function to call it, which makes sure it will work when a new string comes in. </p>
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-3-1.png" alt="..." />
