@@ -456,13 +456,21 @@
                                     </div>
                                     <!-- Portfolio Modal - Text-->
                                     <h3><br>Prelab</h3>
-                                    <p class="mb-4">In Lab2, we are going to use Sparkfun RedBoard Artemis Nano, 9DOF IMU Sensor and a RC car. We will get more familiar with 9DOF IMU Sensor by the Lab2. Basically, we tested the accelerometer and gyroscope function of IMU and played with the RC car for more information about itself. </p>
+                                    <p class="mb-4">In Lab2, we will get more familiar with 9DOF IMU Sensor. Basically, we tested the accelerometer and gyroscope function of IMU and played with the RC car for more information about itself. </p>
                                     <p class="mb-4">Below is a figure of Roll, Yaw and Pitch which we used throughout the Lab2. Understanding it is beneficial for calculating roll, yaw and pitch data by accelerometer and gyroscope. </p>
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/roll_yaw_pitch.gif" alt="..." />
-                                    <p class="mb-4">Copy this address in connection.yaml and use uuid4 function to generate the new UUID as below. Use the new UUID to replace the demo UUID in several places. Then the setup of this lab is finished.</p>
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-0-2.png" alt="..." />
-                                    <h3><br>Demo</h3>
-                                    <p class="mb-4">The main part of the codebase is demo.ipynb which can run in Jupyter Lab with the help of other commands from library ble.py. The successful run of this demo code means the correct setup of hardware and environment. After running the demo, the content shown in Jypyter corresponds with the content in the serial monitor as below. The MAC address of my laptop is shown through the serial monitor (F4:5C:89:C1:4F:A8).</p>
+                                    <h3><br>Setup the IMU</h3>
+                                    <p class="mb-4">First, connect the IMU to the Artemis Nano board. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-1-1.jpg" alt="..." />
+                                    <p class="mb-4">Below is a video showing that the IMU example code is working fine. I added some code to let the LED blink three times each time the board is uploaded so that I can know it starts working. When I rotated the IMU, I found that the accelerometer and gyroscope value were changing, which was helpful to calculate roll, yaw and pitch.</p>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/XSxaZ2dST5Q?si=D-3nrRlGSj2wsoUe" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                    <p class="mb-4">AD0_VAL is the last bit of the I2C address. The default it is set 1 but when the address jumper is closed, the value becomes 0. From datasheet, the IMU slave address is 110100x. “x” here is controlled by AD0_VAL. This means that two IMU can be connected using the same I2C bus at the same time. To do this, one device AD0_VAL should be set low and the other should be set high. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-1-2.png" alt="..." />
+                                    <p class="mb-4">Using the serial plotter, we can see that when the IMU is stationary, there is some noise. When the IMU is moving, we see the change and the noise seems to be more significant. If necessary, after some movements, we can restart the IMU to make the data more reliable. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-1-3.png" alt="..." />
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-1-4.png" alt="..." />
+                                    <h3><br>Accelerometer</h3>
+                                    <p class="mb-4"></p>
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-0-3.png" alt="..." />
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-0-4.png" alt="..." />
                                     <h3><br>Task1 Echo</h3>
