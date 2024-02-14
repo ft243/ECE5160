@@ -470,13 +470,27 @@
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-1-3.png" alt="..." />
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-1-4.png" alt="..." />
                                     <h3><br>Accelerometer</h3>
+                                    <p class="mb-4">Use atan2() to calculate pitch and roll with accelerometer sensor readings. The formula was provided in the lecture example code. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-2-1.png" alt="..." />
+                                    <p class="mb-4">From the video we can see that the accelerometer was quite accurate. The two-point calibration was not a need in my case. </p>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/jMpVF98pAQE?si=Sr1hcuXoS86fUueE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                    <p class="mb-4">It was counted that 30 sets of data were generated per second from the serial monitor, so the sampling rate should be 30. I planned to analyze 4-second data. Roll and Pitch data in time domain:</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-2-2.png" alt="..." />
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-2-3.png" alt="..." />
+                                    <p class="mb-4">Below is frequency domain figure. We can see that the noise amplitude is too low to be noticed. As pitch and roll frequency domain figures are so similar that I only posted pitch ones. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-2-4.png" alt="..." />
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-2-5.png" alt="..." />
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-2-6.png" alt="..." />
+                                    <p class="mb-4">If we focus on the low frequency part, we can notice that amplitude of 10Hz got close to 0. Plus, the amplitude of the high frequency part is very small, we don't need a low pass filter, and the data sheet shows that this IMU comes with a low pass filter, so there is even less need to add a low pass filter. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-2-7.png" alt="..." />
+                                    <p class="mb-4">Since my sample rate is 30Hz, and according to Nyquist's law of sampling we know that the highest frequency (Nyquist frequency) at which a signal can be captured and reconstructed without ambiguity is 15 Hz. So it makes sense to set the cut off frequency of my low pass filter to around 15 HZ.</p>
+                                    <p class="mb-4">After applied low pass filter, there was not too much difference. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-2-8.png" alt="..." />
+                                    <h3><br>Gyroscope</h3>
+                                    <p class="mb-4">From figure below, we can see that gyroscope data was flat, which means it was not bothered by noise. The disadvantage is that the gyroscope data drifts as time goes by. The drift eventually will be so significant that it influences the calculated degree. Also, I found that the longer delay we introduce in the loop, the larger the gyroscope will drift. Therefore, we should avoid too much delay when operating. </p>
                                     <p class="mb-4"></p>
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-0-3.png" alt="..." />
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-0-4.png" alt="..." />
-                                    <h3><br>Task1 Echo</h3>
-                                    <p class="mb-4">On Artemis side, code as below to read the string from the laptop and send it back with prefixes and suffixes. Also, output the content in serial monitor with prefix.</p>
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-1-1.png" alt="..." />
-                                    <p class="mb-4">On the Laptop side, call the ECHO command with a specific string. The results of this task are as below.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-3-1.png" alt="..." />
+                                    <p class="mb-4"></p>
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-1-2.png" alt="..." />
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-1-3.png" alt="..." />
                                     <h3><br>Task2 Get Time</h3>
