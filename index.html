@@ -488,41 +488,27 @@
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-2-8.png" alt="..." />
                                     <h3><br>Gyroscope</h3>
                                     <p class="mb-4">From figure below, we can see that gyroscope data was flat, which means it was not bothered by noise. The disadvantage is that the gyroscope data drifts as time goes by. The drift eventually will be so significant that it influences the calculated degree. Also, I found that the longer delay we introduce in the loop, the larger the gyroscope will drift. Therefore, we should avoid too much delay when operating. </p>
-                                    <p class="mb-4"></p>
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-3-1.png" alt="..." />
-                                    <p class="mb-4"></p>
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-1-2.png" alt="..." />
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-1-3.png" alt="..." />
-                                    <h3><br>Task2 Get Time</h3>
-                                    <p class="mb-4">Use the millis function to get the time of Artemis (in ms), convert it into a string and send it to the laptop.</p>
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-2-1.png" alt="..." />
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-2-2.png" alt="..." />
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-2-3.png" alt="..." />
-                                    <h3><br>Task 3 Handler</h3>
-                                    <p class="mb-4">Design a “strprocessor” to deal with the string from Artemis, split it with “:” and the second part is the value of time without prefix. Use ble.start_notify function to call it, which makes sure it will work when a new string comes in. </p>
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-3-1.png" alt="..." />
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-3-2.png" alt="..." />
-                                    <h3><br>Task 4 Get Temperature</h3>
-                                    <p class="mb-4">Design a new strprocessor to deal with a group of five temperatures with time to make the raw string more readable.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-3-3.png" alt="..." />
+                                    <p class="mb-4">By the video below we can see that there are always some errors between gyroscope pitch and accelerometer pitch. One possible reason is that gyroscope pitch data is obtained by integration, the error is always in the integration and there is no way to eliminate this error. Changing the sampling frequency does not help a lot with this problem. </p>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/JUladSwyLyw?si=GTmjBYJShUXZxncR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                    <p class="mb-4">As accelerometer has noise and gyroscope drifts, a complimentary filter could be used, which takes part of accelerometer reading and part of gyroscope reading to compute the output. The weight alpha was set 0.1 in my case. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-3-4.png" alt="..." />
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-3-5.png" alt="..." />
+                                    <p class="mb-4">By using complimentary filter, the noise effect was heavily reduced. One thing to mention here is that do not write the variable definition in the loop, otherwise each loop the variable will be given the initial value and lead to a problem. </p>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/jbDMWQ_CPxU?si=suM37xFHu35sbahD" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                    <h3><br>Sample Data</h3>
+                                    <p class="mb-4">Use a flag to control data collection. First, we connect the Artemis to the laptop via Bluetooth. Then, we send a command to make the flag True. As a result, the time-stamped IMU data is stored into an array. </p>
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-4-1.png" alt="..." />
+                                    <p class="mb-4">Delete all the delays in the loop. The sampling rate is around 233.33 data per second. Roughly every 4ms one data is transferred. Artemis can run the main loop at very high speeds, typically tens of kilohertz, which far exceeds the data update rate of most IMUs.</p>
+                                    <p class="mb-4">Storing the data for each sensor separately improves the clarity and maintainability of the code. So I used different arrays to store data from different sensors. Although the size of the float data will be larger than int, it is best to use float to store data because our data comes with a decimal point, which is important information. Be careful about the array size. I initially set size 200 and caused overflow! </p>
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-4-2.png" alt="..." />
+                                    <p class="mb-4">Float is 4-byte size. All my data is float, so a set of data needs to use 28-byte. Artemis has 284k byte then 284k/28 = 10142 sets of data, roughly 300 seconds of data.</p>
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-4-3.png" alt="..." />
-                                    <h3><br>TASK 5 Get Temperature Rapidly</h3>
-                                    <p class="mb-4">For the purpose of getting 60 temperatures in 5 seconds, we do not have to make them by groups. We can just convey the information one by one, and delay for 80ms between every communication.</p>
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-5-1.png" alt="..." />
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-5-2.png" alt="..." />
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-5-3.png" alt="..." />
-                                    <p class="mb-4">From 1405545 to 1410442, 60 temperatures with time are transferred and processed successfully.</p>
-                                    <h3><br>TASK 6 Limitation</h3>
-                                    <p class="mb-4">Suppose X% RAM is for the use of sending, total bit for sending = 384*1000*8*X% = 3072000*X%. Total bit in one module of the specific form = 5*16*150 = 12000. So, the maximum number of this type of module is 256*X%. </p>
-                                    <h3><br>TASK 7 (5000+) Data Ratep</h3>
-                                    <p class="mb-4">I use the simplified ECHO command to measure the time interval between sending and receiving with 1B, 2B, 3B, …, 120B messages. Calculate the data rate by byte/(2*time).</p>
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-7-1.png" alt="..." />
-                                    <p class="mb-4">Plot in Excel. I found that the longer packet can make a bigger Byte rate. However, there are a few downward fluctuations in the speed of large packets, which may be caused by transmission errors, checksum retransmissions.</p>
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/2-7-2.png" alt="..." />
-                                    <h3><br>TASK 8 (5000+) Reliability</h3>
-                                    <p class="mb-4">I cancel the delay in temperature read rapidly command and use it to send 5000 groups of data. After checking, the data are all right. BLE communication is reliable, there should be some verification mechanism in BLE communication.</p>
-                                    
+                                    <h3><br>Record a Stunt</h3>
+                                    <p class="mb-4">The vehicle runs so fast that it is very hard to control. It was discovered that the velocity of this vehicle is not changeable. It takes so limited time to accelerate to its maximum speed. </p>                                   
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/Es4Vq2hZSsY?si=n4eeuWSqrwn5LwdJ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                                     <button class="btn btn-primary" data-bs-dismiss="modal">
                                         <i class="fas fa-xmark fa-fw"></i>
                                         Close Window
