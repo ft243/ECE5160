@@ -554,27 +554,35 @@
                                     <h3><br>ToF Setup and Connection</h3>
                                     <p class="mb-4">The figure below shows the connection between the ToF sensor and the Breakout Board. Red – Vin, Black – GND, Blue – SDA, Yellow – SCL for soldering reference. </p>
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/3-2-1.jpg" alt="..." />
-                                    <h3><br>TOF Mode and Data</h3>
-                                    <p class="mb-4">There are only two modes in fact, short for 1.3m and long for 4m. Taking the size of the robot(car) into consideration, 1.3m is enough for the guidance of its movement. If we want to position the car using the distance from the boundary, the long mode may be more appropriate. Therefore, I use the short mode for the following tasks.</p>
-                                    <p class="mb-4">I measure the distance of 100mm, 200mm, 300mm, …, and 1300mm using one TOF sensor under two light conditions, got the result, and plot them using excel. Generally, it is accurate, maybe a calibration can be applied to deal with the unidirectional errors. The result in dark circumstances is more closed, probably caused by less light disturbance.</p>
+                                    <p class="mb-4">By running the example wire_I2C file, we can see the address of the ToF. It is shown 0x29, which is different from the 0x52 in the datasheet. Look closer at the datasheet, we can know the least significant bit is read/write bit. Take this bit out we can find that the left seven bits are exactly 0x29. So, the least significant bit is not considered into the address. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/3-2-2.png" alt="..." />
+                                    <h3><br>ToF Mode ToF Testing</h3>
+                                    <p class="mb-4">Now there are only two modes in ToF library, which are short (1.3m) and long (4m) modes. The short mode offers a higher accuracy while the long mode has the advantage of longer distance detection. Personally, I think 1.3m is an enough range for the robot to react and its data is less affected by the noise. If the speed of the car is really fast, the long mode can be chosen for a longer adjustment distance. In this lab, I chose the short mode to test the ToF. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/3-2-3.png" alt="..." />
+                                    <p class="mb-4">I planned to test the data at every 100mm (therefore from 100mm to 1300mm) to see the accuracy of the ToF sensor under different lighting conditions. When testing, I found that one of my ToF sensors have a around 100mm blind spot, which means that the sensor cannot detect the obstacles that are too close the sensor. According to the testing results, I found that it is accurate and reliable. The lighting conditions have a little effect on the results, but generally, the results under dim lighting conditions have a higher accuracy. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/3-2-4.png" alt="..." />
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/3-2-5.png" alt="..." />
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/3-2-6.png" alt="..." />
+                                    <h3><br>2 ToF Sensors</h3>
+                                    <p class="mb-4">As discussed in the Prelab section, connect two sensors, turn one off, change the address and turn on the sensor. Then, two ToF sensors can be used simultaneously. </p>
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/3-3-1.png" alt="..." />
-                                    <h3><br>Two TOFs Together</h3>
-                                    <p class="mb-4">To use two TOF sensors simultaneously, I code as below when setup these sensors and take the outcome as a video.</p>
+                                    <p class="mb-4">The video below shows that the two sensors worked well.</p>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/XCNopdSrIgo?si=nt0S3CCL10vfP2qc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>                      
+                                    <h3><br>ToF Sensor Speed</h3>
+                                    <p class="mb-4">To test the sensor speed, we can use millis() function to see the duration spent to send two data.</p>
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/3-4-1.png" alt="..." />
-                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/v8blSKpUIeU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>                                
-                                    <h3><br>Distance with clock</h3>
-                                    <p class="mb-4">Slightly modify the loop of the example as below.</p>
+                                    <p class="mb-4">From the result below, it was found that it used about 100ms to generate one data. The limiting factor are a lot, such as, the delay function, the serial print function used in the loop, and the baud rate and so on. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/3-4-2.png" alt="..." />
+                                    <h3><br>ToF Data via BLE</h3>
+                                    <p class="mb-4">Similar to Lab 2, use BLE to transmit the data from the Artemis to the laptop. Create a handler in python file to process the data. </p>
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/3-5-1.png" alt="..." />
-                                    <p class="mb-4">In the result, the clock values were output with intervals of 4ms, the results were output with intervals of roughly 100ms. That means I can get the double distance information 10 times per second. The velocity of ADC may be the key factor that limits the speed.</p>
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/3-5-2.png" alt="..." />
-                                    <h3><br>BLE</h3>
-                                    <p class="mb-4">Use the framework in lab2, and create a new command called TOF in Jupyter Lab. On the Artemis side, fit the setup part and get-value part in.</p>
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/3-6-1.png" alt="..." />
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/3-6-2.png" alt="..." />
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/3-5-3.png" alt="..." />
                                     <h3><br>(5000+) Discussion of infrared sensor</h3>
-                                    <p class="mb-4">Infrared light is invisible light and there are a lot of infrared rays present in the daily environment. All these infrared rays will inevitably affect the infrared sensor. Therefore, when designing, choose a specific wavelength of infrared light as the medium to resist interference as much as possible; when using, do not use it in places where the light source is too strong. In the first part, the TOF sensor can show better performance under dark light conditions.</p>
-                                    <p class="mb-4">I tried several colors of reflective surfaces on hand, which had little effect on the results. In theory, darker objects would absorb more light to cause less return energy, but in practice I did not notice this effect. For glass-like surfaces, I found that the sensor even went through the glass to measure the distance to the object behind the glass, which is unacceptable. Presumably, ultrasonic distance sensors can avoid this problem to some extent, due to the different properties of electromagnetic and mechanical waves.</p>
-
+                                    <p class="mb-4">ToF sensor is an active infrared distance sensor. It emits infrared radiation and receives the reflection infrared signal after hitting an object. The time used between transmit and receive can be used for calculating the distance. The other kind of infrared sensor is called passive infrared sensor. It only receives the infrared signal emitted by other objects. We should use active infrared sensor such as ToF to measure the distance. There are a few factors that can affect the accuracy of an infrared sensor. For example, interference from external light and smooth or reflective surfaces can degrade accuracy.</p>
+                                    <h3><br>(5000+) Sensitivity of sensors to colors and textures</h3>
+                                    <p class="mb-4">I tested different color such as red, black and yellow and smooth or reflective surface, the results shown that it does not really influence the accuracy. However, when I tried to move the obstacle far away from the sensor, such as 1m, the black obstacle measurement was not so accurate. This may be caused by long distance but I chosen the short mode, and dark obstacle absorbs more light so the light energy returned to the sensor is less. </p>
+                                    
 
                                     <button class="btn btn-primary" data-bs-dismiss="modal">
                                         <i class="fas fa-xmark fa-fw"></i>
