@@ -84,8 +84,8 @@
                             <img class="img-fluid" src="assets/img/portfolio/cake.png" alt="..." />
                         </div>
                     </div>
-                    <!---
-                    Lab3
+                    
+                    <!--Lab3-->
                     <div class="col-md-6 col-lg-4 mb-5">
                         <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal3">
                             <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
@@ -95,6 +95,7 @@
                         </div>
                     </div>
                     
+                    <!--
                     Lab4
                     <div class="col-md-6 col-lg-4 mb-5 mb-lg-0">
                         <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal4">
@@ -541,16 +542,18 @@
                                     <!-- Portfolio Modal - Image-->
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/circus.png" alt="..." />
                                     <!-- Portfolio Modal - Text-->
-                                    <h3><br>Introduction</h3>
-                                    <p class="mb-4">In this lab, the TOF sensors are set up and used. There are several specific problems that need to be solved during the application.</p>
-                                    <h3><br>Setup</h3>
-                                    <p class="mb-4">I put 3 devices on the I2C wire, two TOF sensors, and one IMU. </p>
+                                    <h3><br>Lab Objective</h3>
+                                    <p class="mb-4">We setup the Time-of-Flight (ToF) sensor, particularly VL53L1X. At last, we connected a QWIIC Breakout Board to the Artemis and two ToF sensors and one IMU are connected to the Artemis by connecting to the breakout board.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/3-1-1.jpg" alt="..." />                                
+                                    <h3><br>Prelab</h3>
+                                    <p class="mb-4">The I2C device address of the ToF sensor is 0x52, but two ToF sensors will use this address. To use the sensors simultaneously, one approach is to programmatically shutdown one of them, namely Sensor 1 for understanding, through shutdown pins (soldering the Sensor 1 shutdown pins to one of the Artemis pin, in my case, I used pin 4), change the address that is ON (Sensor 2) so they will not conflict and then turn on the sensor which is shut down before (Sensor 1). After doing so, two ToF sensors now are using different address and can work simultaneously. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/3-1-2.png" alt="..." />
+                                    <p class="mb-4">A brief sketch of the wiring diagram is shown below. One ToF Pin XSHUT is soldered to connect the Artemis Pin 4 for changing the address. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/3-1-3.jpg" alt="..." />
+                                    <p class="mb-4">One of the ToF sensors has to be placed at the front of the car because we need to know if there are obstacles in the direction the car is going. The other ToF sensor could be placed at the front of the car to give a more accurate reading, but I don't think that would make much sense, we only know what's in front of us and not what's to the side. It could also be placed in the side position, so we have information in both directions. </p>
+                                    <h3><br>ToF Setup and Connection</h3>
+                                    <p class="mb-4">The figure below shows the connection between the ToF sensor and the Breakout Board. Red – Vin, Black – GND, Blue – SDA, Yellow – SCL for soldering reference. </p>
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/3-2-1.jpg" alt="..." />
-                                    <p class="mb-4">Run the I2C example code. I got the result below. Only two devices are identified (0x29 and 0x69). That makes sense because two TOF sensors share the same I2C address.  </p>
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/3-2-2.png" alt="..." />
-                                    <p class="mb-4">To simultaneously make use of two TOF sensors, shut down any one of them and change its I2C address. The XSHUT pin will be used to realize the method. Do not forget to turn it on after setting the new address. The sketch is as below.</p>
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/3-2-3.jpg" alt="..." />
-                                    <p class="mb-4">For the placements of these two sensors, I think putting them on the left-front and right-front is a good idea, especially for the purpose of forward obstacle avoidance.</p>
                                     <h3><br>TOF Mode and Data</h3>
                                     <p class="mb-4">There are only two modes in fact, short for 1.3m and long for 4m. Taking the size of the robot(car) into consideration, 1.3m is enough for the guidance of its movement. If we want to position the car using the distance from the boundary, the long mode may be more appropriate. Therefore, I use the short mode for the following tasks.</p>
                                     <p class="mb-4">I measure the distance of 100mm, 200mm, 300mm, …, and 1300mm using one TOF sensor under two light conditions, got the result, and plot them using excel. Generally, it is accurate, maybe a calibration can be applied to deal with the unidirectional errors. The result in dark circumstances is more closed, probably caused by less light disturbance.</p>
