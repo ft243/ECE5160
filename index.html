@@ -95,8 +95,8 @@
                         </div>
                     </div>
                     
-                    <!--
-                    Lab4
+                    
+                    <!--Lab4-->
                     <div class="col-md-6 col-lg-4 mb-5 mb-lg-0">
                         <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal4">
                             <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
@@ -105,6 +105,7 @@
                             <img class="img-fluid" src="assets/img/portfolio/game.png" alt="..." />
                         </div>
                     </div>
+                    <!--
                     Lab5
                     <div class="col-md-6 col-lg-4 mb-5 mb-md-0">
                         <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal5">
@@ -605,16 +606,18 @@
                             <div class="row justify-content-center">
                                 <div class="col-lg-8">
                                     <!-- Portfolio Modal - Title-->
-                                    <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">IMU</h2>
+                                    <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Motors and Open Loop Control</h2>
                                     <!-- Icon Divider-->
                                     <div class="divider-custom">
                                         <div class="divider-custom-line"></div>
                                         <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                                         <div class="divider-custom-line"></div>
                                     </div>
-                                    <h3><br>Introduction</h3>
-                                    <p class="mb-4">In this lab, the IMU sensor is set up and used. There are several specific problems that need to be solved during the application.</p>
-                                    <h3><br>Setup</h3>
+                                    <h3><br>Prelab</h3>
+                                    <p class="mb-4">We will use two dual motor drivers to control two motors. We should select appropriate pins to control the dual motor drivers. One motor is connected to pin 6 and pin 7 and the other motor is connected to pin 11 and pin 12. These pins are chosen due to their PWM capabilities. These pins are also capable of analogWrite function as “~” shown in the datasheet. The circuit diagram is shown below. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/4-1-1.jpg" alt="..." />
+                                    <p class="mb-4">We have 650mAh and 850mAh batteries. We will use both of them, and the smaller capacity battery 650mAh is connected to the Artemis board while the larger capacity battery 850mAh is connected to the dual motor drivers as the drivers consume more power. The reason why two separate batteries are used is that this avoids the transient effects, further avoiding the restart of the Artemis caused by large current changes. </p>
+                                    <h3><br>Testing</h3>
                                     <p class="mb-4">I use the break board to connect all the sensors I have together, through one I2C wire.</p>
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/4-1-1.jpg" alt="..." />
                                     <p class="mb-4">Run the IMU example code. The result in the video indicated that I set up the system rightly. Actually, the code has been run in our lecture before. I added some LED blink when start-up and IMU sudden move.</p>
