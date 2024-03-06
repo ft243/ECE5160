@@ -634,7 +634,7 @@
                                     <p class="mb-4">Before discussing the lower limit, let’s look at my hardware connection. I placed one ToF at the front of the car and the other ToF at one side. The IMU was placed next to the Artemis. </p>
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/4-3-1.jpg" alt="..." />
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/4-3-2.jpg" alt="..." />
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/4-3-2.jpg" alt="..." />
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/4-3-3.jpg" alt="..." />
                                     <h3><br>Lower Limit of PWM Value</h3>
                                     <p class="mb-4">The lower limit PWM value is the value that just make the car move. As observed before, the motors do not spin at the same rate, so the lower limit PWM value would be different for two motor drivers. After multiple testing, the lower limit for the left motor is 50 and the lower limit for the right motor is 33. </p>
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/4-4-1-code.png" alt="..." />
@@ -642,6 +642,7 @@
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/4-4-2-code.png" alt="..." />
                                     <iframe width="560" height="315" src="https://www.youtube.com/embed/B1jS5guw5CI?si=yTG_uFb0nYR9W3J-" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                                     <p class="mb-4">There are two ways to stop the car, hard stop and soft stop. Hard stop is to set all inputs 255, this will make driver not spin immediately so the car can stop in a very short time. In hard stop, the wheels seem like they are stuck and can't turn. Soft stop is to set all inputs 0, this just makes the speed 0, but the car may need some distance to be stationary. Therefore, I used hard stop first, and then used soft stop. </p>
+                                    <p class="mb-4">As two motors have different rate under the same PWM, the correction factor is needed to make the car move forward in a straight line. I set PWM value 100, and the correction factor was found to be 0.66. The right motor always spins faster, so correction factor applies to right motor. The video below shows the robot can move in a fairly straight line. </p>
                                     
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/4-2-2.png" alt="..." />
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Pitch_t.png" alt="..." />
