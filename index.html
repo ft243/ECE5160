@@ -688,10 +688,16 @@
                                     </div>
                                     
                                     <h3><br>Introduction</h3>
-                                    <p class="mb-4">In this lab, the RC car was disassembled and properly reconnected so that the control from Artemis and the drive from motor drivers are applied to the system.</p>
+                                    <p class="mb-4">The purpose of this lab is to have a better understanding of PID control. I implemented a PID controller onto the robot to make the robot stop at the desired distance from the wall. </p>
                                     <h3><br>Prelab</h3>
-                                    <p class="mb-4">The connections between Artemis, motor drivers, batteries, and motors are as below. From the datasheet choose the pins with “~” as the signal channels from Artemis to motor drivers because analogWrite functions can be used on those pins. The small battery is for Artemis and defines the signal ground on Artemis and the signal parts of motor drivers. The big battery is for the motor drivers and defines the power ground on the power parts of the motor drivers. The signal circuit and power circuit are totally isolated to avoid mutual interference, especially from power circuits to signal circuits.</p>
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/5-0-1.png" alt="..." />
+                                    <p class="mb-4">I used the BLE to send command to let the robot start, and another command to receive the PID data from the robot. Also, for adjusting the PID value easier and target setpoint, I created a command to change the Kp, Ki, Kd and setpoint via BLE. Set PID value and setpoint command is shown below:</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab5-1-1.png" alt="..." />
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab5-1-2.png" alt="..." />
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab5-1-3.png" alt="..." />
+                                    <p class="mb-4">To prevent sending the data from the robot to the laptop slowing down the loop frequency, I decided to store the PID data into the arrays first and the robot sends the data when I call the command. I stored time data, the ToF at the front of the robot distance data, error data and PWM data for both motor drivers. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab5-1-4.png" alt="..." />
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab5-1-5.png" alt="..." />
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab5-1-6.png" alt="..." />
                                     <h3><br>Hardware Connections</h3>
                                     <p class="mb-4">I have done lots of soldering work before and I am confident in my soldering skill and stability. Therefore, I soldered all the lines needed in this lab as my first step. The outcome is as below.</p>
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/5-1-1.jpg" alt="..." />
