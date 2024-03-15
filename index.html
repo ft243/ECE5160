@@ -710,25 +710,14 @@
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab5-3-code1.png" alt="..." />
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab5-3-code2.png" alt="..." />
                                     <h3><br>Results</h3>
-                                    <p class="mb-4">s</p>
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/5-2-1.png" alt="..." />
-                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/gPldl3JD5gc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                                    <p class="mb-4">Slightly modify the code as below and make two motors spin in different direction.</p>
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/5-2-2.png" alt="..." />
-                                    <iframe width="390" height="693" src="https://www.youtube.com/embed/EsBw6P2UhhY" title="Lab5_2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                                    <h3><br>Organizing Hardware and Tuning</h3>
-                                    <p class="mb-4">Organize the wire and fix the TOF sensors as below. Considering that this is not definitely the final hardware layout, I did not secure the individual devices firmly. The main consideration here is to not interfere with the rotation of the wheel.</p>
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/5-3-1.jpg" alt="..." />
-                                    <p class="mb-4">After further tuning of the parameters, I made the car complete 2 meters of straight travel (30 cm per brick, the car travels over 6.5 bricks). My car needs to distribute 5 parts of power on the left and 7 parts on the right to complete a straight line, and I will keep this ratio in mind.</p>
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/5-3-2.png" alt="..." />
-                                    <iframe width="390" height="693" src="https://www.youtube.com/embed/uMGqTG_j6Ho" title="Lab5_3" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                                    <p class="mb-4">After many attempts, I found the minimum PWM value that can maintain the motion as shown below. In the video, the car does not start by itself, but if you give it a gentle push, the car is able to maintain its motion. Note: the motor should not be energized but not in motion for too long, there is a risk of damaging the motor! I'll keep this set of data in mind as well.</p>
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/5-3-3.png" alt="..." />
-                                    <iframe width="390" height="693" src="https://www.youtube.com/embed/kcvFHQuEwkI" title="Lab5_4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                                    <h3><br>Additional Discussions (5000+ Level)</h3>
-                                    <p class="mb-4">The motor driver is a power electronics circuit. From Prof. Afridi’s course, I know a higher switching frequency means a lot to power electronics. In this case, if we can manually configure the timers to generate a faster PWM signal, the output DC voltage for the motor can be more stable. This may make the motor movement more stable.</p>
-                                    <p class="mb-4">Overcoming static friction requires more force to start, while a smaller force can maintain the movement of the cart. Through my tests, this minimum sustaining PWM value is 25/255 for left and 35/255 for right. As shown in the previous section, I found this minimum PWM value. The PWM value can be reduced to this value between travels in the process of controlling the motor motion later.</p>
-
+                                    <p class="mb-4">From the figure plotted below, it can be found that the robot stopped at the distance around 400mm. It can also be seen from the videos. I made two videos, one is on the Lab ground while the other is on the carpet. The robot cannot move as fast as on the ground, so it is easier to stop. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab5-3-3.png" alt="..." />
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab5-3-4.png" alt="..." />
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab5-3-5.png" alt="..." />
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/SoX6r-kif40?si=Qah8a90u_wwGkOeR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/QWvj1ReRJSw?si=A0zyE2gPsbJQbryk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                    <h3><br>Wind-up implementation and discussion (5000+ Level)</h3>
+                                    <p class="mb-4">In my code, I limited the integral results to avoid integral windup. If the error is large and keeps for some time, the integral will easily wind up and cause PWM value exceeding 255 limitations. I also set the maximum limitation on the PWM, so it cannot exceed 255. </p>
                                     <button class="btn btn-primary" data-bs-dismiss="modal">
                                         <i class="fas fa-xmark fa-fw"></i>
                                         Close Window
