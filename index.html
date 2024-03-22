@@ -115,16 +115,17 @@
                             <img class="img-fluid" src="assets/img/portfolio/Lab5_page.png" alt="..." />
                         </div>
                     </div>
-                    <!--
-                    Lab6
+                    
+                    <!--Lab6-->
                     <div class="col-md-6 col-lg-4">
                         <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal6">
                             <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                                 <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
                             </div>
-                            <img class="img-fluid" src="assets/img/portfolio/submarine.png" alt="..." />
+                            <img class="img-fluid" src="assets/img/portfolio/Lab5_page.png" alt="..." />
                         </div>
                     </div>
+                    <!--
                     Lab7
                     <div class="col-md-6 col-lg-4">
                         <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal7">
@@ -739,7 +740,7 @@
                             <div class="row justify-content-center">
                                 <div class="col-lg-8">
                                     <!-- Portfolio Modal - Title-->
-                                    <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">PID Control</h2>
+                                    <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">orientation Control</h2>
                                     <!-- Icon Divider-->
                                     <div class="divider-custom">
                                         <div class="divider-custom-line"></div>
@@ -748,19 +749,19 @@
                                     </div>
 
                                     <h3><br>Introduction</h3>
-                                    <p class="mb-4">In this lab, PID closed-loop control is applied in the robot system to control the distance to the wall. (I chose task A_position control)</p>
-                                    <h3><br>Pre-lab</h3>
-                                    <p class="mb-4">Although we can observe the behaviors of our car, knowing the key values from the sensor and Artemis is very important for our PID tuning. Therefore, I build a new string processing function in Python, together with storing the data and plotting functions as below. </p>
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/6-1.png" alt="..." />
-                                    <p class="mb-4">On Artemis, the data is sent in the package of time, distance, and PWM. I get rid of the symbols and only split them with “|” to reduce the time for data sending so that the control period can be small. (We only have one core for both PID control and data sending). The code will be shown in the following part with PID control.</p>
-                                    <h3><br>PID-control</h3>
-                                    <p class="mb-4">From my point of view, proportional control is the basic part of PID, the integral part is used to eliminate the static error, and finally add the derivative parameter to make the system respond in advance if needed. Tuning the PID parameters should make the system stable first, then accurate, and finally fast. </p>
-                                    <p class="mb-4">I realized the PID control by the following code. It is worth noting that the car has a threshold PWM value to overcome the friction (42 left, 35 right for my car). Therefore, PWM below this value is meaningless in physics, I add these threshold values when setting the GPIO. I also set 30 as the limitation of PWM (left) to make the car easier to control.</p>
-                                    <p class="mb-4">The code is as below, together with BLE data-sending functions. I finally tuned my proportional parameter to 0.7 and my integral parameter to 0.1.</p>
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/6-2.png" alt="..." />
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/6-3.png" alt="..." />
-                                    <h3><br>Results</h3>
-                                    <p class="mb-4">In the short-distance starting test, the car responded as below and I plot the data as required. I think the car did a good job.</p>
+                                    <p class="mb-4">In this Lab, the PID was used for orientation control, which means drive the wheel in opposite directions to control the orientation. </p>
+                                    <h3><br>Prelab</h3>
+                                    <p class="mb-4">I used the BLE command from last lab to adjust the PID parameters. Similarly, in last lab I stored the data in different array and call a command to send them in one run, I did this as well for this lab, just store the data into other array. The PID parameter command is shown below:</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab5-1-1.png" alt="..." />
+                                    <p class="mb-4">The reason why I did not transmit the data while PID operation was that I did not want to slow down the loop. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab6-2-2.png" alt="..." />
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab6-2-3.png" alt="..." />
+                                    <h3><br>P/I/D Discussion</h3>   
+                                    <p class="mb-4">It was discussed in detail in the last lab. Generally, the larger Proportional Kp can make the system response faster. Therefore, in this lab I planned to choose a quite large Kp to adjust the orientation fast. For Integral Ki, a suitable integral gain Ki can help the system to eliminate the steady state error quickly and not cause the system to oscillate. Differential Kd main function is to predict future error trends so that control decisions can be made in advance to suppress excessively rapid error changes.</p>
+                                    <p class="mb-4">At last, I chose Kp = 10, a quite large value, Ki = 0.5 and Kd = 1. This combination not only responses fast but also makes system stable. </p>
+                                    <h3><br>Range/Sampling Time Discussion</h3>
+                                    <p class="mb-4">The sampling frequency of the IMU sensor is around 100Hz to 200Hz, which is very enough for PID control to response. The accelerometer has noise and the gyroscope drifts, so the sensor reading may be not stable. However, we can use complimentary filter to settle this. In general, the data is quite accurate. </p>
+                                    <h3><br>orientation Control</h3>
                                     <iframe width="390" height="693" src="https://www.youtube.com/embed/j1QqhKeiPpM" title="Lab6_1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/6-4.png" alt="..." />
                                     <img class="img-fluid rounded mb-5" src="assets/img/portfolio/6-5.png" alt="..." />
