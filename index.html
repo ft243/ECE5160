@@ -761,16 +761,22 @@
                                     <p class="mb-4">At last, I chose Kp = 10, a quite large value, Ki = 0.5 and Kd = 1. This combination not only responses fast but also makes system stable. </p>
                                     <h3><br>Range/Sampling Time Discussion</h3>
                                     <p class="mb-4">The sampling frequency of the IMU sensor is around 100Hz to 200Hz, which is very enough for PID control to response. The accelerometer has noise and the gyroscope drifts, so the sensor reading may be not stable. However, we can use complimentary filter to settle this. In general, the data is quite accurate. </p>
-                                    <h3><br>orientation Control</h3>
-                                    <iframe width="390" height="693" src="https://www.youtube.com/embed/j1QqhKeiPpM" title="Lab6_1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/6-4.png" alt="..." />
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/6-5.png" alt="..." />
-                                    <p class="mb-4">In the long-distance starting test, the overshooting became big due to the longer acceleration. The car almost hit the wall but the car decelerated to zero and backed up at the last moment.</p>
-                                    <iframe width="390" height="693" src="https://www.youtube.com/embed/E283Ss8As5Y" title="Lab6_2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/6-6.png" alt="..." />
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/6-7.png" alt="..." />
-                                    <h3><br>Wind-up protection for integrator (5000+ level)</h3>
-                                    <p class="mb-4">The integral part can eliminate the static error but also causes the lagging, i.e. the former error will influence the latter action by the integrator. This lagging can be reduced by the limitation of the integrator and we can also make some leading part (derivative part) to offset to some extent. In my lab, I set the limitation of PWM output to limit the influence of the integrator.</p>
+                                    <h3><br>Orientation Control</h3>
+                                    <p class="mb-4">I used the above PID parameter combination. In my PID control, I planned to operate for 20 seconds. The error here, unlike before, is the sum of previous error and IMU sensor reading. By the way, I placed the IMU vertical, so I used gyroscope x axis value instead of z value. The error here we can think in this way: a rotation can be considered as many small rotations, and the error is the sum of the errors of these small rotations. At the first several error, set it to 0 because the data at the beginning  is not stable, which is further influencing the integral part (Ki), and making the robot rotating all the time even no external force. I tested that when I made robot rotate in clock-wise direction, the gyroscope x axis value changed to negative. So when the PID result is negative, the robot should rotate in anti-clock-wise direction and vice versa. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab6_PID_code1.png" alt="..." />
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab6_PID_code2.png" alt="..." />
+                                    <h3><br>Results</h3>
+                                    <p class="mb-4">The figure below helped me debug. When the first several errors were not set 0, the integral part has a very large value, usually 200 as I set integral part maximum is 200. This will cause PID result always large, even without the change of gyroscope data. By eliminating the first several errors, the PID control worked as normal. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab6-P-debug.png" alt="..." />
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab6-I-debug.png" alt="..." />
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab6-D-debug.png" alt="..." />
+                                    <p class="mb-4">Below are some data plot during the operation. When the PWM is positive, rotate anti-clock-wise, otherwize, rotate clock-wise.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab6-error.png" alt="..." />
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab6-PID.png" alt="..." />
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab6-PWM.png" alt="..." />
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/OOb2mBz07Qo?si=2vM6_m80PSKi5Mks" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                    <h3><br>Wind-up Discussion (5000+ level)</h3>
+                                    <p class="mb-4">Similar as before, I set a limitation to the integral to avoid the PID result becoming to large. At the same time, I set limitation on the PID result maximum 255 to avoid cause error of analogWrite PWM value. </p>
                                     <button class="btn btn-primary" data-bs-dismiss="modal">
                                         <i class="fas fa-xmark fa-fw"></i>
                                         Close Window
