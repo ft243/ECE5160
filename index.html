@@ -808,7 +808,29 @@
                                     </div>
 
                                     <h3><br>Introduction</h3>
-                                    <p class="mb-4">1</p>
+                                    <p class="mb-4">In this lab, we learned Kalman filter which is very necessary as our robot moves faster than the speed of ToF sensor reading distance. Kalman filter can predict where the robot is heading for and calculate the predicted distance to avoid collusion. </p>
+                                    <h3><br>Drag and Mass of Kalman Filter</h3>
+                                    <p class="mb-4">The Kalman Filter predicts the distance of the robot according to the state space model, which are two important parameters, drag and mass. Then according to the sensor reading, the Kalman filter updates some of the parameters. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab7_KF_definition.png" alt="..." />
+                                    <p class="mb-4">To find the matrix A B and C, we should find the drag and mass based on the robot velocity. Drag (d) is 1 / steady state robot speed and mass (m) is -d * t_90 (the time used for to achieve 90% of the steady state speed) / ln(1-0.9). The figure below shows the steady state speed when the robot moves towards to the wall. We can find that the steady state speed is about 1900mm/s and the t_90 is around 2 seconds. Therefore, d= 1 / 1900 = 0.000526 and m = -d * t_90 / ln(0.1) = 0.000457. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab7_velocity.png" alt="..." />
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab7_distance.png" alt="..." />
+                                    <h3><br>Initialize KF</h3>
+                                    <p class="mb-4">Then, we can calculate more parameters such as A, B, C, Ad and Bd. By the way, C = [-1 0] which is not calculated, but is defined as so.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab7_KF_more_parameters.png" alt="..." />
+                                    <p class="mb-4">The Kalman Filter also needs the measurement noise and process noise (depending on the sampling rate). From figure below, we should find sigma1, sigma2 and sigma 3. From the lecture PowerPoint,  sigma1 = 27.7, sigma2 = 27.7 and sigma3 = 20. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab7_KFnoise.png" alt="..." />
+                                    <h3><br>Implement and Test KF</h3>
+                                    <p class="mb-4">To implement it on Jupyter Lab, we should combine the matrix calculated before into one KF function. The parameter u is our robot PWM value during moving and the parameter d is the distance from the wall. Pay attention, the parameter u is the percentage of the PWM values which can move the car. The least PWM value to move my robot is 50, and maximum is 255, so it should be (u – 50) / (255 – 50). </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab7_KF_implement.png" alt="..." />
+                                    <p class="mb-4">By adjustiing sigma values, we can have different prediction. Change the trust level of the sensor. The less you trust the sensor, the more the output is predicted from the KF.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab7_KF_1.png" alt="..." />
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab7_KF_2.png" alt="..." />
+                                    <h3><br>Implement KF on the Robot</h3>
+                                    <p class="mb-4">To implement KF on the robot, we should transfer python into C. The code is shown below. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab7_KFrobot1.png" alt="..." />
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab7_KFrobot2.png" alt="..." />
+                                    
                                     <button class="btn btn-primary" data-bs-dismiss="modal">
                                         <i class="fas fa-xmark fa-fw"></i>
                                         Close Window
