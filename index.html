@@ -135,8 +135,8 @@
                             <img class="img-fluid" src="assets/img/portfolio/Lab7_title.png" alt="..." />
                         </div>
                     </div>
-                    <!--
-                    Lab8
+                    
+                    <!--Lab8-->
                     <div class="col-md-6 col-lg-4">
                         <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal8">
                             <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
@@ -145,6 +145,7 @@
                             <img class="img-fluid" src="assets/img/portfolio/Lab8_title.jpg" alt="..." />
                         </div>
                     </div>
+                    <!--
                     Lab9
                     <div class="col-md-6 col-lg-4">
                         <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal9">
@@ -861,7 +862,18 @@
                                     </div>
 
                                     <h3><br>Introduction</h3>
-                                    <p class="mb-4">1</p>
+                                    <p class="mb-4">In this lab, we are required to carry out one of the stunt tasks. I chose the Task A Position Control which performs a flip and drives back. </p>
+                                    <h3><br>Position Control</h3>
+                                    <p class="mb-4">To flip the robot at the distance 0.5m from the wall, my plan was to rush the robot into the wall and then suddenly change the direction of both motors, so the robot could flip due to inertia. Therefore, I removed the PID used in the previous labs as PID control would slow down the speed the robot rushes into the wall. I planned to use Kalman Filter but it did not work well. As Kalman Filter predicts much faster than ToF sensor reading, when the prediction is not accurate, the speed of the robot was low. Then it cannot flip. Recalculating the drag (d) and mass (m) did not solve the problem so I gave up using Kalman Filter. Just use ToF sensor. </p>
+                                    <p class="mb-4">Before flipping the robot, the robot is running into the wall at maximum PWM value 255 for both motors. When the sensor reading is smaller than a specific value, the robot will move backward at maximum PWM value 255 for some time to flip the robot, and then move backward at PWM value 150. As the sensor reading is not fast enough, when I set the specific value 500, the robot always did not flip. I reckon this is because when the sensor reading is 500, the robot has no time and distance to do the next operation, so it ran into the wall instead of flipping. Therefore, I increased the specific value to 1200. The logic makes the robot flip at 1.2m distance from the wall, but the sensor reads not fast enough and robot needs time to react, it will eventually flip at 0.5m on the sticky matt. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab8_code1.png" alt="..." />
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab8_code2.png" alt="..." />
+                                    <p class="mb-4">The videos below say that my robot indeed flipped and move backward. However, there is a problem unsolved. When backward moving, the left side motor always stops earlier than the right side. This makes that the robot cannot move backward in a straight line, but rotate at one point. After discussing with TAs, this is caused by mechanical problem so there is not much I can do to change it. Maybe in the future I can use IMU to make the robot move backward in a straight line. </p>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/MMvq4gjZS7I?si=k1SzHZNwQnYvZ4oZ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/oFA7Jnx2fdw?si=A52mcSSn21ZsV6HP" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/7iqq-fgE3Ks?si=Wj0pVcONxbNeVnuz" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                    <p class="mb-4">The PWM value is 255 when the robot moves forward, then -255 (which means move backward at 255) to cause the flip. At last, PWM value is -150 to make it move backward in a straight line and hard stop (both motors are 255). The distance versus time is shown below. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab8_distance.png" alt="..." />
                                     <button class="btn btn-primary" data-bs-dismiss="modal">
                                         <i class="fas fa-xmark fa-fw"></i>
                                         Close Window
