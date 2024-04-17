@@ -145,16 +145,18 @@
                             <img class="img-fluid" src="assets/img/portfolio/Lab8_title.jpg" alt="..." />
                         </div>
                     </div>
-                    <!--
-                    Lab9
+                    
+                    <!--Lab9-->
                     <div class="col-md-6 col-lg-4">
                         <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal9">
                             <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                                 <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
                             </div>
-                            <img class="img-fluid" src="assets/img/portfolio/Lab9_title.jpg" alt="..." />
+                            <img class="img-fluid" src="assets/img/portfolio/Lab9_final_plot.png" alt="..." />
                         </div>
                     </div>
+                    <!--
+
                     Lab10
                     <div class="col-md-6 col-lg-4">
                         <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal10">
@@ -904,31 +906,35 @@
                                     </div>
 
                                     <h3><br>Introduction</h3>
-                                    <p class="mb-4">In this lab, a 2D map is built by the robot. The robot rotated and scanned from 4 points, and get several distances. Then I merged these data together and compare them with the real map.</p>
-                                    <h3><br>Rotation Control</h3>
-                                    <p class="mb-4">The robot is required to rotate one circle and get 20 distances with same angle intervals. For the rotation, an open-loop strategy is applied.</p>
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/9_1.png" alt="..." />
-                                    <p class="mb-4">I drive each move by applying a PWM of 200/255 on the right (backward), and a PWM of 170/255 on the left (forward) because of the asymmetry within the system. These PWMs are kept for 100ms, then brakes are applied for 100ms to make sure the robot is still when measuring the distance. Under these values, each move is 18 degrees, and 20 moves to 360 degrees as shown in the video below.</p>
-                                    <iframe width="390" height="693" src="https://www.youtube.com/embed/3d6wgqOwkAM" title="Lab9" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                                    <p class="mb-4">I have to admit that open-loop control may not be the best choice because the robot acted precisely only when the battery voltage is 3.65-3.7V. When the battery voltage is high, the robot will rotate more than one turn and vice versa. In addition to performing closed-loop control, I think there are two other ways to improve the stability of the robot with respect to the battery voltage -- using a lower PWM but a longer delay time to accomplish the same move or applying a voltage stabilizer chip to the battery.</p>
-                                    <h3><br>Data processing</h3>
-                                    <p class="mb-4">Even though the robot had some problems as above, I monitored the battery voltage to make sure my robot performed well at the four measurements.</p>
-                                    <p class="mb-4">Data from (5, -3) is logged and drawn in the polar coordinate system as below.</p>
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/9_2.png" alt="..." />
-                                    <p class="mb-4">Data from (-3, -2) is logged and drawn in the polar coordinate system as below.</p>
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/9_3.png" alt="..." />
-                                    <p class="mb-4">Data from (0, 3) is logged and drawn in the polar coordinate system as below.</p>
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/9_4.png" alt="..." />
-                                    <p class="mb-4">Data from (5, 3) is logged and drawn in the polar coordinate system as below.</p>
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/9_5.png" alt="..." />
-                                    <p class="mb-4">Then I merge these points in the cartesian coordinate system. I am more familiar with metric units so I convert the unit to millimeters and build the map with the unit of millimeters.</p>
-                                    <p class="mb-4">The photo of the lab field looks like this.</p>
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/9_6.jpg" alt="..." />
-                                    <p class="mb-4">I draw the boundaries in the real world together with the map I get by merging the data.</p>
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/9_7.png" alt="..." />
-                                    <p class="mb-4">I code in Jupyter Notebook to do the data processing. Each of my scan begins towards the windows and the robot makes the first rotation and measure the first distance, so an offset of angle is applied.</p>
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/9_8.png" alt="..." />
-                                    <p class="mb-4">The past website from Ryan helps me a lot. Thanks!</p>
+                                    <p class="mb-4">The goal of this lab is to map out a static room by using the ToF sensor data. This static room will also be used in later Lab 11 and Lab 12. Our robot will be placed at five different designated spots, which will give enough information about the static room. At each designated spot, the robot should spin around its axis and gather the ToF readings during the spin. After ToF readings from five spots are collected, we can plot a 2D map by using the transformation matrices. </p>
+                                    <h3><br>Angular Speed Control</h3>
+                                    <p class="mb-4">There are three ways to control the robot collecting the ToF data, I preferred the angular speed control. I planned the robot spin around 20 degrees per second. In order to control the angular speed, PID control should be used. To spin the robot on one axis, for my case, it was the X axis of the gyroscope as I put the IMU vertically. To determine the slowest PWM value for motors, friction and battery are two most important factors to consider. On different ground and with different battery conditions, the slowest PWM value varies. Overall, the slowest PWM value is around 120 to 130. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/angular_speed_control_code.png" alt="..." />
+                                    <p class="mb-4">The below video and figures demonstrate the angular speed control. </p>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/x3KSW7nPaF8?si=OalkDvd1uzTw1z9r" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab9_angular_speed.png" alt="..." />
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab9_PID_result.png" alt="..." />
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab9_distance.png" alt="..." />
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab9_angle.png" alt="..." />
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab9_PID_error.png" alt="..." />  
+                                    <p class="mb-4">The video shows that the robot spined slowly on-axis but not so stable, the robot is likely to drive in a slight circle. The angular speed average should be 20, but the IMU reading is frustrating due to the friction between tile and wheels. It took around 15 seconds to complete a 360-degree spin, so the average angular speed is 24 which is close to 20. My PID result, which is the PWM value, is fluctuating from 120 to 127. </p>
+                                    <h3><br>Read Out Distance</h3>
+                                    <p class="mb-4">The five designated spots are (5, -3), (5, 3), (0, 3), (0, 0) and (-3, -2). Therefore, in total, five distance data should be recorded. Each spot, I recorded twice and found the best fit one. The five polar coordinate plots are shown below. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab9_polar1.png" alt="..." />
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab9_polar2.png" alt="..." />
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab9_polar3.png" alt="..." />
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab9_polar4.png" alt="..." />
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab9_polar5.png" alt="..." />
+                                    <h3><br>Merge and Plot Readings</h3>
+                                    <p class="mb-4">The transformation matrices are used to convert the distance value detected by ToF sensor to the inertial reference frame of the room. My transformation equation is shown below. The data was obtained at different locations, so angle offset may be applied to get the correct mapping. The unit should be constant and 1 foot = 304.8mm. Different locations have different X and Y value. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab9_transformation.png" alt="..." />
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab9_plot1.png" alt="..." />
+                                    <p class="mb-4">The mapping is not satisfied, so I increased the PWM value to spin faster and get less data to avoid useless data. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab9_plot2.png" alt="..." />
+                                    <h3><br>Convert to Line Based Map</h3>
+                                    <p class="mb-4">Based on the scatter plot, add the actual walls and boxes to it. I estimated the location of walls and boxes and stored the X and Y values. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab9_convert_to_line.png" alt="..." />
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab9_final_plot.png" alt="..." />
                                     <button class="btn btn-primary" data-bs-dismiss="modal">
                                         <i class="fas fa-xmark fa-fw"></i>
                                         Close Window
