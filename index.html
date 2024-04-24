@@ -155,17 +155,19 @@
                             <img class="img-fluid" src="assets/img/portfolio/Lab9_final_plot.png" alt="..." />
                         </div>
                     </div>
-                    <!--
+                    
 
-                    Lab10
+                    <!--Lab10-->
                     <div class="col-md-6 col-lg-4">
                         <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal10">
                             <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                                 <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
                             </div>
-                            <img class="img-fluid" src="assets/img/portfolio/Lab10_title.png" alt="..." />
+                            <img class="img-fluid" src="assets/img/portfolio/Lab10_page.png" alt="..." />
                         </div>
                     </div>
+
+                    <!--
                     Lab11
                     <div class="col-md-6 col-lg-4">
                         <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal11">
@@ -965,32 +967,30 @@
                                     </div>
 
                                     <h3><br>Introduction</h3>
-                                    <p class="mb-4">This lab is in simulation and all of the work is done on my computer. Bayes filter is applied for the localization.</p>
-                                    <h3><br>Algorithms</h3>
-                                    <p class="mb-4">Beginning with the framework, we need to realize the idea of the Bayes filter. As in the tutorial, numpy and math modules are used in the code. The whole thing can be divided into 5 parts.</p>
+                                    <p class="mb-4">In this lab, we should implement a Bayes filter to perform the grid localization using a simulation of the robot. The basic principle of Bayes filter is that the probability density of a state is firstly predicted by a system model, then it is corrected with the most recent measurements. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab10_BayesFilter.png" alt="..." />
+                                    <h3><br>Grid Localization</h3>
+                                    <p class="mb-4">The map is a 3-dimensional grid size of potential robot poses for locating the robot. The 3-dimensional stands for x, y and theta, where x and y are the robot position and theta is the angle with respect to the inertial frame. The robot in total has 1944 poses as x-dimension, y-dimension and theta size are 12, 9 and 18 respectively. </p>
+                                    <p class="mb-4">The provided jupyter notebook and predefined classes help a lot. We only need to complete five functions to implement Bayes filter.</p>
                                     <h4><br>Part I compute_control</h4>
-                                    <p class="mb-4">The status of the robot contains its position and direction. The robot can switch from one status to another status by 3 steps. Firstly, rotate toward the new position, then move the proper distance and adjust to the new orientation. This part is actually figuring out these three parameters given the old and new status.</p>
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab10_1.png" alt="..." />
+                                    <p class="mb-4">The compute_control takes in previous pose and current pose, and extracts the control information based on the odometry motion model. To find the probability of the new pose, the first rotation, translation and the second rotation should be calculated. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab10_compute_control.png" alt="..." />
                                     <h4><br>Part II odom_motion_model</h4>
-                                    <p class="mb-4">This part uses an odometry model to return the probability that the robot moves to a certain status, given two status and the control.</p>
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab10_2.png" alt="..." />
+                                    <p class="mb-4">The odom_motion_model takes in current pose, previous pose and control input (u). It computes the probability of the robot moving to current pose using Gaussian distribution with compute_control output rot1, trans and rot2 and taken-in input u. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab10_odom_motion_model.png" alt="..." />
                                     <h4><br>Part III prediction_step</h4>
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab10_3.png" alt="..." />
-                                    <p class="mb-4">As shown in line 3, the first step of the Bayes filter is to make the prediction. I used a triple loop to iterate through all the possibilities. It is important to find a minimum threshold for the probabilities below which we do not consider. I found that some classmates set this value to be 0.0001. I tried it too but my computer fan was spinning like crazy, but it couldn't stop heating up and the computer looked like it was going to die at any moment. The code running also got stuck. I changed the value to 0.01 then and everything is ok.</p>
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab10_4.png" alt="..." />
-                                    <h4><br>Part IV prediction_step</h4>
-                                    <p class="mb-4">Do some rotation to get some measurements about the current status and store them.</p>
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab10_5.png" alt="..." />
-                                    <h4><br>Part V update </h4>
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab10_3.png" alt="..." />
-                                    <p class="mb-4">As shown in line 4, update using the result from the above measurements and calculations.</p>
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab10_6.png" alt="..." />
-                                    <h3><br>Results</h3>
-                                    <p class="mb-4">Plug these modules in and run the code, I got the blue line (BF) to fit the green line (actual trajectory) much better than the red line(Odometry).</p>
-                                    <iframe width="951" height="533" src="https://www.youtube.com/embed/nt6nR_y6Qu4" title="Lab10" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                                    <p class="mb-4">I also got the data in the text which shows the most probable state after each iteration of the Bayes filter as well as its probability.</p>
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab10_7.png" alt="..." />
-                                    <p class="mb-4">The past websites from Ryan and Linda help me a lot. Thanks!</p>
+                                    <p class="mb-4">The prediction_step is used for calculating the position of the robot. The calculation only takes the odometry values into consideration, without any sensor measurements. There are 6 nested for loops as there are 3 dimensions for previous and current pose. To optimize the code operation speed, we skip the states which previous belief is smaller than 0.001. If the belief is smaller than 0.001, it is not worth calculating. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab10_prediction_step.png" alt="..." />
+                                    <h4><br>Part IV sensor_model</h4>
+                                    <p class="mb-4">The sensor_model takes in true observation of the robot and output an array which stores the value of p(z|x) for every 18 sensor measurement. The Gaussian distribution is used here to calculate the probability. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab10_sensor_model.png" alt="..." />
+                                    <h4><br>Part V update_step </h4>
+                                    <p class="mb-4">The update_step updates the beliefs based on the sensor_model. Depending on how much sense the previous belief makes considering the sensor measurements, the new belief is updated.</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab10_update_step.png" alt="..." />
+                                    <h3><br>Simulation</h3>
+                                    <p class="mb-4">Below are demos showing the Bayes filter. The green line represents the ground true, the blue line represents the Bayes filter output and the red line represents the odometry readings. We can see that the Bayes filter output (blue line) is very accurate even though the odometry readings are not promising ,as the blue line almost aligns with the green line. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab10_page.png" alt="..." />
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/20SxFxMTWBs?si=01fDf4e-EEajVinN" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                                     <button class="btn btn-primary" data-bs-dismiss="modal">
                                         <i class="fas fa-xmark fa-fw"></i>
                                         Close Window
