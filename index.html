@@ -167,8 +167,8 @@
                         </div>
                     </div>
 
-                    <!--
-                    Lab11
+                    
+                    <!--Lab11-->
                     <div class="col-md-6 col-lg-4">
                         <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal11">
                             <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
@@ -177,6 +177,7 @@
                             <img class="img-fluid" src="assets/img/portfolio/Lab11_title.jpg" alt="..." />
                         </div>
                     </div>
+                    <!--
                     Lab12
                     <div class="col-md-6 col-lg-4">
                         <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal12">
@@ -1021,32 +1022,28 @@
                                     </div>
 
                                     <h3><br>Introduction</h3>
-                                    <p class="mb-4">In this lab, we will implement localization on the robot, exactly by running Bayesian filters on the computer to determine the robot's position based on the data returned by the robot.</p>
+                                    <p class="mb-4">In the previous lab, we successfully implemented the Bayes Filter for robot simulation, and in this lab we need to implement it to the real robot. The distance data was collected by ToF sensor 	and it was processed by optimized localization code in the Jupyter Notebook. </p>
                                     <h3><br>Simulation</h3>
-                                    <p class="mb-4">Run this simulation ro make sure I set up correctly as in Lab10.</p>
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/11-0.png" alt="..." />
-                                    <h3><br>Arduino Side</h3>
-                                    <p class="mb-4">I think my open-loop control in lab 9 is OK. Therefore, I just simply modified the code to meet the requirement of this lab (18 measures for each circle).</p>
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/11-1.png" alt="..." />
-                                    <h3><br>PC Side</h3>
-                                    <p class="mb-4">Based on the framework given, we need to code under perform_observation_loop to plug the measurements in the localization algorithm. I use the same idea of my previous BLE communication based on the string processor.</p>
-                                    <p class="mb-4">However, although the distance array can have 18 values at last, the function did not wait for all of the 18 data. Some delay should be applied here. I try to use while~if~break, timer, and even flag variables but they did not work because they all blocked the running of my string processor. With the help from Anya, I finally figure out the solution using “asyncio.run(asyncio.sleep(8))” and all things work after that.</p>
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/11-2.png" alt="..." />
-                                    <h3><br>Tests and Results</h3>
-                                    <p class="mb-4">My first test is from (5,-3)</p>
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/11-3.png" alt="..." />
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/11-4.png" alt="..." />
-                                    <p class="mb-4">Then from (-3,-2)</p>
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/11-5.png" alt="..." />
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/11-6.png" alt="..." />
-                                    <p class="mb-4">From (0,3)</p>
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/11-7.png" alt="..." />
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/11-8.png" alt="..." />
-                                    <p class="mb-4">From (5,3)</p>
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/11-9.png" alt="..." />
-                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/11-10.png" alt="..." />
-                                    <h3><br>Discussion</h3>
-                                    <p class="mb-4">My algorithm performs well at the last three points and has a relatively large error at the first point. From the graph, the measured value at point (5, -3) should include many larger numbers, and the lack of accuracy of the sensor at long distances may be the cause of the problem. Also, as described in lab 9, my open-loop control is highly dependent on the battery voltage, and although I have tried my best to adjust it, it is difficult to ensure that the car has turned exactly one full revolution in each test. I think my experiment worked well overall, but there is room for improvement.</p>
+                                    <p class="mb-4">Run the localization code in simulation to verify it is working well. From figure below, we can see that the blue line (Bayes Filter) is quite in align with the green line (ground truth), the same results of last lab. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab11_setup.png" alt="..." />
+                                    <h3><br>Arduino</h3>
+                                    <p class="mb-4">For the real robot, like we did in Lab 9, we need the data from four points (-3,-2), (0,3), (5,-3) and (5,3). For each point we only want 18 distance data, so our wanted angular speed is one data per 20 degrees. Sometimes the number of data will exceed 18, in this case we should only focus on the first 18 data and ignore the rest. </p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab11_arduino_code1.png" alt="..." />
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab11_arduino_code2.png" alt="..." />
+                                    <h3><br>Jupyter Notebook</h3>
+                                    <p class="mb-4">For the perform_observation_loop function given in the lab 11 jupyter notebook, we process our distance data. Because we are using Bluetooth to transmit the data, we should take the time delay into consideration. This is what “asyncio.run(asyncio.sleep(30))” does. This time allows the robot to do the rotation and send the data, and after 30 secs, the data is processed. The reason why we do not use time.delay() here is that it does not allow the localization code running in the background. Nothing is running during time.delay().</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab11_jupyter_1.png" alt="..." />
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/lab11_jupyter_2.png" alt="..." />
+                                    <h3><br>Results</h3>
+                                    <p class="mb-4">(-3,-2)</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab11_-3-2.png" alt="..." />
+                                    <p class="mb-4">(0,3)</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab11_03.png" alt="..." />
+                                    <p class="mb-4">(5,3)</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab11_53.png" alt="..." />
+                                    <p class="mb-4">(5,-3)</p>
+                                    <img class="img-fluid rounded mb-5" src="assets/img/portfolio/Lab11_5-3.png" alt="..." />
+                                    <p class="mb-4">From the results, some points have good localization while some not. For those not, it is likely due to not robust sensor readings. For example, point (0,3) may loss some disntance data on the x axis. Another potential problem is that the robot is not rotating every 20 degrees. </p>
                                     <button class="btn btn-primary" data-bs-dismiss="modal">
                                         <i class="fas fa-xmark fa-fw"></i>
                                         Close Window
